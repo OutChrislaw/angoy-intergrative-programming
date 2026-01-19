@@ -1,0 +1,35 @@
+* {
+  margin: 12px;
+}
+
+body {
+  background-color: rgb(32, 32, 32);
+}
+
+h1,
+h2 {
+  color: azure;
+}
+
+.highlight {
+  color: aqua;
+}
+
+.heading {
+  display: inline-flex;
+}
+
+.delete {
+  background-color: red;
+  color: black;
+  font-weight: 500;
+  font-family: "Roboto";
+  border-radius: 6px;
+  border-color: black;
+  margin: 28px;
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
+}
