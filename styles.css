@@ -1,0 +1,337 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-dark-blue: #0a1128;
+  --secondary-gold: #ffd700;
+  --text-light: #ffffff;
+  --text-muted: #b3b3b3;
+  --accent-red: #e50914;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--primary-dark-blue);
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+/* Header Styling */
+header {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 17, 40, 0.8) 0%,
+    rgba(10, 17, 40, 0.4) 100%
+  );
+  padding: 12.5px 31.25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+header h1 {
+  font-size: 1.5625rem;
+  font-weight: 800;
+  color: var(--secondary-gold);
+  letter-spacing: 1.25px;
+}
+
+header nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 9.6px 19.2px;
+  border: 1.25px solid var(--secondary-gold);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+header nav a:hover {
+  background-color: var(--secondary-gold);
+  color: var(--primary-dark-blue);
+}
+
+/* Hero Section */
+section:first-of-type {
+  background:
+    linear-gradient(rgba(10, 17, 40, 0.5), rgba(10, 17, 40, 0.7)),
+    url("background1.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+  padding: 120px 50px;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section:first-of-type h2 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+section:first-of-type > p:first-of-type {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--secondary-gold);
+  font-weight: 600;
+}
+
+section:first-of-type > p:nth-of-type(2) {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+form input {
+  flex: 1;
+  min-width: 250px;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+form input::placeholder {
+  color: #999;
+}
+
+form button {
+  padding: 15px 40px;
+  background-color: var(--secondary-gold);
+  color: var(--primary-dark-blue);
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+form button:hover {
+  background-color: #ffed4e;
+  transform: scale(1.05);
+}
+
+/* Feature Sections */
+section:nth-of-type(2),
+section:nth-of-type(3),
+section:nth-of-type(4),
+section:nth-of-type(5) {
+  padding: 80px 50px;
+  text-align: center;
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
+}
+
+section:nth-of-type(2) {
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
+}
+
+section:nth-of-type(3) {
+  background: linear-gradient(135deg, rgba(10, 17, 40, 0.7), rgba(26, 42, 94, 0.7)), url("Section2.jpg") center 30%/cover no-repeat;
+}
+
+section:nth-of-type(4) {
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
+}
+
+section:nth-of-type(5) {
+  background: linear-gradient(135deg, rgba(10, 17, 40, 0.7), rgba(26, 42, 94, 0.7)), url("Section4.jpg") center 30%/cover no-repeat;
+}
+
+section:nth-of-type(2) h2,
+section:nth-of-type(3) h2,
+section:nth-of-type(4) h2,
+section:nth-of-type(5) h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--secondary-gold);
+  font-weight: 700;
+}
+
+section:nth-of-type(2) p,
+section:nth-of-type(3) p,
+section:nth-of-type(4) p,
+section:nth-of-type(5) p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* FAQ Section */
+section:nth-of-type(6) {
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
+  padding: 100px 50px;
+}
+
+section:nth-of-type(6) h2 {
+  font-size: 2.8rem;
+  text-align: center;
+  margin-bottom: 60px;
+  color: var(--secondary-gold);
+}
+
+article {
+  background-color: rgba(26, 42, 94, 0.5);
+  padding: 30px;
+  margin-bottom: 20px;
+  border-left: 5px solid var(--secondary-gold);
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+article:hover {
+  background-color: rgba(26, 42, 94, 0.8);
+  transform: translateX(10px);
+}
+
+article h3 {
+  font-size: 1.4rem;
+  color: var(--secondary-gold);
+  margin-bottom: 15px;
+}
+
+article p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+/* Call to Action Section */
+section:nth-of-type(7) {
+  background:
+    linear-gradient(rgba(10, 17, 40, 0.7), rgba(10, 17, 40, 0.9)),
+    url("background2.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+  padding: 100px 50px;
+  text-align: center;
+}
+
+section:nth-of-type(7) p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+/* Footer */
+footer {
+  background-color: #050812;
+  padding: 60px 50px;
+  text-align: center;
+  border-top: 2px solid var(--secondary-gold);
+}
+
+footer p:first-child {
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+footer ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+footer a:hover {
+  color: var(--secondary-gold);
+}
+
+footer p:last-child {
+  color: var(--secondary-gold);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  section:first-of-type {
+    padding: 60px 20px;
+  }
+
+  section:first-of-type h2 {
+    font-size: 2.5rem;
+  }
+
+  section:nth-of-type(2),
+  section:nth-of-type(3),
+  section:nth-of-type(4),
+  section:nth-of-type(5),
+  section:nth-of-type(6),
+  section:nth-of-type(7) {
+    padding: 50px 20px;
+  }
+
+  form {
+    flex-direction: column;
+  }
+
+  form input,
+  form button {
+    width: 100%;
+  }
+
+  footer ul {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  section:first-of-type h2 {
+    font-size: 1.8rem;
+  }
+
+  section:nth-of-type(2) h2,
+  section:nth-of-type(3) h2,
+  section:nth-of-type(4) h2,
+  section:nth-of-type(5) h2 {
+    font-size: 1.8rem;
+  }
+}
