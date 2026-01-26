@@ -805,7 +805,7 @@ footer p:last-child {
 /* Login and Signup Pages Styles */
 .login-container,
 .signup-container {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -858,7 +858,7 @@ footer p:last-child {
     rgba(10, 17, 40, 0.8) 100%
   );
   border: 2px solid rgba(0, 217, 255, 0.3);
-  padding: 50px;
+  padding: 30px;
   border-radius: 15px;
   width: 100%;
   position: relative;
@@ -884,7 +884,7 @@ footer p:last-child {
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
 }
 
@@ -897,11 +897,11 @@ footer p:last-child {
 }
 
 .login-box .form-group {
-  margin-bottom: 12.5px;
+  margin-bottom: 8px;
 }
 
 .signup-box .form-group {
-  margin-bottom: 9.375px;
+  margin-bottom: 6px;
 }
 
 .form-group label {
@@ -909,7 +909,7 @@ footer p:last-child {
   color: var(--neon-cyan);
   font-weight: 700;
   font-family: "Space Mono", monospace;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-size: 0.95rem;
 }
 
@@ -941,6 +941,7 @@ footer p:last-child {
 .login-button,
 .signup-button {
   width: 100%;
+  max-width: 400px;
   padding: 15px 40px;
   background: linear-gradient(
     135deg,
