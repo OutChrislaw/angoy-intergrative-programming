@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Settings – BIGGY FLIX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>
+        <a href="index.html" style="text-decoration: none; color: inherit"
+          >BIGGY FLIX</a
+        >
+      </h1>
+      <nav>
+        <a href="profile.html">Back to Profile</a>
+      </nav>
+    </header>
+
+    <!-- Settings Container -->
+    <div class="settings-container">
+      <div class="settings-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="settings-sidebar">
+          <h3>Settings</h3>
+          <nav class="settings-nav">
+            <a
+              href="#account"
+              class="settings-nav-item active"
+              data-section="account"
+            >
+              Account Settings
+            </a>
+            <a href="#email" class="settings-nav-item" data-section="email">
+              Email Preferences
+            </a>
+            <a
+              href="#security"
+              class="settings-nav-item"
+              data-section="security"
+            >
+              Security
+            </a>
+            <a
+              href="#appearance"
+              class="settings-nav-item"
+              data-section="appearance"
+            >
+              Appearance
+            </a>
+            <a
+              href="#notifications"
+              class="settings-nav-item"
+              data-section="notifications"
+            >
+              Notifications
+            </a>
+            <a
+              href="#danger"
+              class="settings-nav-item danger"
+              data-section="danger"
+            >
+              Danger Zone
+            </a>
+          </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="settings-content">
+          <!-- Account Settings Section -->
+          <section class="settings-section active" id="account">
+            <h2>Account Settings</h2>
+            <p class="section-description">Manage your account information</p>
+
+            <form class="settings-form">
+              <div class="form-group-wrapper">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" value="Christian Angoy" />
+              </div>
+
+              <div class="form-group-wrapper">
+                <label for="email-display">Email Address</label>
+                <input
+                  type="email"
+                  id="email-display"
+                  value="christianangoy2023@gmail.com"
+                  disabled
+                />
+              </div>
+
+              <button type="submit" class="btn-save">Save Changes</button>
+            </form>
+          </section>
+
+          <!-- Email Preferences Section -->
+          <section class="settings-section" id="email">
+            <h2>Email Preferences</h2>
+            <p class="section-description">
+              Manage your email and change settings
+            </p>
+
+            <form class="settings-form">
+              <div class="form-group-wrapper">
+                <label for="current-email-s">Current Email</label>
+                <input
+                  type="email"
+                  id="current-email-s"
+                  value="christianangoy2023@gmail.com"
+                  disabled
+                />
+              </div>
+
+              <div class="form-group-wrapper">
+                <label for="new-email-s">Change Email</label>
+                <input
+                  type="email"
+                  id="new-email-s"
+                  placeholder="Enter new email address"
+                />
+                <small
+                  >This field will be synchronized with an external identity
+                  provider in later phases.</small
+                >
+              </div>
+
+              <button type="submit" class="btn-save">Update Email</button>
+            </form>
+          </section>
+
+          <!-- Security Section -->
+          <section class="settings-section" id="security">
+            <h2>Security</h2>
+            <p class="section-description">
+              Manage your password and security settings
+            </p>
+
+            <form class="settings-form">
+              <div class="form-group-wrapper">
+                <label for="current-password-s">Current Password</label>
+                <input
+                  type="password"
+                  id="current-password-s"
+                  placeholder="Enter your current password"
+                />
+              </div>
+
+              <div class="form-group-wrapper">
+                <label for="new-password-s">New Password</label>
+                <input
+                  type="password"
+                  id="new-password-s"
+                  placeholder="Enter new password"
+                />
+                <small
+                  >Argon2id hashing with memory-hard parameters will be
+                  activated in future builds.</small
+                >
+              </div>
+
+              <div class="form-group-wrapper">
+                <label for="confirm-password-s">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirm-password-s"
+                  placeholder="Confirm new password"
+                />
+              </div>
+
+              <button type="submit" class="btn-save">Change Password</button>
+            </form>
+          </section>
+
+          <!-- Appearance Section -->
+          <section class="settings-section" id="appearance">
+            <h2>Appearance</h2>
+            <p class="section-description">Customize how BIGGY FLIX looks</p>
+
+            <form class="settings-form">
+              <div class="form-group-wrapper">
+                <label for="theme-select-s">Theme Preference</label>
+                <select id="theme-select-s">
+                  <option value="dark">Dark Mode</option>
+                  <option value="light">Light Mode</option>
+                  <option value="auto">Auto (System Default)</option>
+                </select>
+              </div>
+
+              <div class="form-checkbox-wrapper">
+                <label for="dark-theme-s">
+                  <input type="checkbox" id="dark-theme-s" checked />
+                  <span>Dark Theme (Default)</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn-save">Save Preferences</button>
+            </form>
+          </section>
+
+          <!-- Notifications Section -->
+          <section class="settings-section" id="notifications">
+            <h2>Notifications</h2>
+            <p class="section-description">
+              Control your notification settings
+            </p>
+
+            <form class="settings-form">
+              <div class="form-checkbox-wrapper">
+                <label for="email-notif">
+                  <input type="checkbox" id="email-notif" checked />
+                  <span>Email Notifications</span>
+                </label>
+              </div>
+
+              <div class="form-checkbox-wrapper">
+                <label for="push-notif">
+                  <input type="checkbox" id="push-notif" checked />
+                  <span>Push Notifications</span>
+                </label>
+              </div>
+
+              <div class="form-checkbox-wrapper">
+                <label for="sms-notif">
+                  <input type="checkbox" id="sms-notif" />
+                  <span>SMS Notifications</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn-save">
+                Save Notification Settings
+              </button>
+            </form>
+          </section>
+
+          <!-- Danger Zone Section -->
+          <section class="settings-section danger-section" id="danger">
+            <h2>Danger Zone</h2>
+            <p class="section-description">
+              Irreversible and destructive actions
+            </p>
+
+            <div class="danger-actions">
+              <div class="danger-item">
+                <div class="danger-info">
+                  <h4>Delete Account</h4>
+                  <p>Permanently delete your account and all associated data</p>
+                </div>
+                <button type="button" class="btn-danger">Delete Account</button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      document.querySelectorAll(".settings-nav-item").forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          const sectionId = item.dataset.section;
+
+          document
+            .querySelectorAll(".settings-nav-item")
+            .forEach((i) => i.classList.remove("active"));
+          document
+            .querySelectorAll(".settings-section")
+            .forEach((s) => s.classList.remove("active"));
+
+          item.classList.add("active");
+          document.getElementById(sectionId).classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
