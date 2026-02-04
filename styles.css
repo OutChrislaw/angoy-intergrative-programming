@@ -202,6 +202,27 @@ section:first-of-type {
   overflow: hidden;
 }
 
+/* Index page specific - override for hero section */
+.index-page section:first-of-type {
+  justify-content: center;
+  align-items: center;
+}
+
+/* Settings page - neutralize global hero section styles */
+.settings-page section:first-of-type {
+  background: none !important;
+  background-attachment: unset !important;
+  padding: 0 !important;
+  text-align: unset !important;
+  min-height: unset !important;
+  display: unset !important;
+  flex-direction: unset !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+  position: unset !important;
+  overflow: unset !important;
+}
+
 section:first-of-type::before {
   content: "";
   position: absolute;
@@ -398,6 +419,110 @@ section:nth-of-type(5)::before {
   );
   border-radius: 50%;
   pointer-events: none;
+}
+
+/* Override padding for profile page sections */
+.profile-content section:nth-of-type(2),
+.profile-content section:nth-of-type(3),
+.profile-content section:nth-of-type(4),
+.profile-content section:nth-of-type(5) {
+  padding: 30px !important;
+  text-align: unset !important;
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%) !important;
+  position: unset !important;
+  overflow: unset !important;
+  animation: none !important;
+  border: 2px solid rgba(0, 217, 255, 0.3) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Override padding for profile page Active Devices and Watch History sections */
+.profile-content section:nth-of-type(6),
+.profile-content section:nth-of-type(7) {
+  padding: 30px !important;
+  text-align: unset !important;
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%) !important;
+  position: unset !important;
+  overflow: unset !important;
+  animation: none !important;
+  border: 2px solid rgba(0, 217, 255, 0.3) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.profile-content section:nth-of-type(2)::before,
+.profile-content section:nth-of-type(3)::before,
+.profile-content section:nth-of-type(4)::before,
+.profile-content section:nth-of-type(5)::before,
+.profile-content section:nth-of-type(6)::before,
+.profile-content section:nth-of-type(7)::before {
+  display: none !important;
+}
+
+/* Settings page - neutralize all global feature section styles */
+.settings-page section:nth-of-type(2),
+.settings-page section:nth-of-type(3),
+.settings-page section:nth-of-type(4),
+.settings-page section:nth-of-type(5) {
+  padding: 0 !important;
+  text-align: unset !important;
+  background: none !important;
+  position: unset !important;
+  overflow: unset !important;
+  animation: none !important;
+}
+
+.settings-page section:nth-of-type(2)::before,
+.settings-page section:nth-of-type(3)::before,
+.settings-page section:nth-of-type(4)::before,
+.settings-page section:nth-of-type(5)::before {
+  display: none !important;
+}
+
+/* Settings page - neutralize CTA section styles */
+.settings-page section:nth-of-type(7) {
+  background: none !important;
+  background-attachment: unset !important;
+  padding: 0 !important;
+  text-align: unset !important;
+  position: unset !important;
+  overflow: unset !important;
+}
+
+.settings-page section:nth-of-type(7)::before {
+  display: none !important;
+}
+
+/* Settings page - neutralize global form styles (only for non-settings forms) */
+body.settings-page:not(.settings-page .settings-form) form {
+  display: unset !important;
+  gap: unset !important;
+  max-width: unset !important;
+  margin: unset !important;
+  flex-wrap: unset !important;
+  justify-content: unset !important;
+  animation: none !important;
+  position: unset !important;
+  z-index: unset !important;
+}
+
+body.settings-page:not(.settings-page .settings-form) form input {
+  flex: unset !important;
+  min-width: unset !important;
+  padding: 14px 16px !important;
+  border: 1px solid rgba(0, 217, 255, 0.3) !important;
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+  background-color: rgba(10, 17, 40, 0.6) !important;
+  color: var(--text-light) !important;
+  font-family: "Outfit", sans-serif !important;
+  transition: all 0.3s ease !important;
+  margin-bottom: 0 !important;
+}
+
+body.settings-page:not(.settings-page .settings-form) form input::placeholder {
+  color: rgba(179, 179, 179, 0.5) !important;
 }
 
 section:nth-of-type(2) h2,
@@ -629,11 +754,7 @@ footer p:last-child {
 /* Unique Section Styling */
 .ai-picks,
 .watch-party {
-  background: linear-gradient(
-    135deg,
-    rgba(10, 17, 40, 0.9) 0%,
-    rgba(26, 42, 94, 0.8) 100%
-  );
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
   padding: 100px 50px;
   position: relative;
   overflow: hidden;
@@ -2861,11 +2982,7 @@ footer p:last-child {
 }
 
 .sidebar-card {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 217, 255, 0.15),
-    rgba(217, 70, 239, 0.15)
-  );
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
   border: 2px solid rgba(0, 217, 255, 0.4);
   border-radius: 12px;
   padding: 25px;
@@ -2990,24 +3107,40 @@ footer p:last-child {
 .sidebar-btn {
   width: 100%;
   margin-top: 10px;
+  display: block;
+  text-align: center;
 }
 
 /* MAIN CONTENT */
 .profile-content {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 0;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.profile-content section:first-of-type {
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding: 30px !important;
+  min-height: auto !important;
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%) !important;
+}
+
+.profile-content > .content-section:first-of-type {
+  margin-top: 0;
+}
+
+.profile-content > .content-section:not(:first-of-type) {
+  margin-top: 30px;
 }
 
 .content-section {
-  background: linear-gradient(
-    135deg,
-    rgba(10, 17, 40, 0.95),
-    rgba(20, 30, 70, 0.9)
-  );
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
   border: 2px solid rgba(0, 217, 255, 0.3);
   border-radius: 12px;
-  padding: 30px;
+  padding: 15px 30px;
   animation: fadeInUp 0.6s ease-out;
   transition: all 0.3s ease;
 }
@@ -3021,9 +3154,9 @@ footer p:last-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid rgba(0, 217, 255, 0.4);
+  margin: 0;
+  padding: 0;
+  border-bottom: none;
 }
 
 .section-header h3 {
@@ -3031,7 +3164,7 @@ footer p:last-child {
   font-size: 1.5rem;
   font-weight: 900;
   color: var(--secondary-gold);
-  margin: 0;
+  margin: 0 !important;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -3056,6 +3189,9 @@ footer p:last-child {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  margin: 0;
+  margin-top: 20px;
+  padding-top: 0;
 }
 
 .info-card {
@@ -3103,6 +3239,9 @@ footer p:last-child {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .subscription-card {
@@ -3161,6 +3300,9 @@ footer p:last-child {
   justify-content: space-between;
   align-items: center;
   padding: 25px;
+  margin-top: 15px;
+  padding-top: 25px;
+  padding-bottom: 25px;
   background: linear-gradient(
     135deg,
     rgba(0, 217, 255, 0.15),
@@ -3365,6 +3507,9 @@ footer p:last-child {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .preference-item {
@@ -3418,6 +3563,9 @@ footer p:last-child {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .profile-card {
@@ -3469,22 +3617,25 @@ footer p:last-child {
 /* Devices Grid */
 .devices-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .device-card {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 20px;
+  gap: 20px;
+  padding: 25px;
   background: linear-gradient(
     135deg,
-    rgba(0, 217, 255, 0.15),
-    rgba(217, 70, 239, 0.15)
+    rgba(26, 42, 94, 0.6) 0%,
+    rgba(10, 17, 40, 0.8) 100%
   );
-  border: 1px solid rgba(0, 217, 255, 0.35);
-  border-radius: 10px;
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  border-radius: 12px;
   transition: all 0.3s ease;
 }
 
@@ -3492,62 +3643,74 @@ footer p:last-child {
   border-color: var(--neon-cyan);
   background: linear-gradient(
     135deg,
-    rgba(0, 217, 255, 0.25),
-    rgba(217, 70, 239, 0.25)
+    rgba(26, 42, 94, 0.8) 0%,
+    rgba(10, 17, 40, 0.95) 100%
   );
-  box-shadow: 0 0 25px rgba(0, 217, 255, 0.25);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+  transform: translateY(-5px);
 }
 
-.device-icon {
-  font-size: 2rem;
-  min-width: 50px;
+.device-card-icon {
+  font-size: 2.5rem;
+  min-width: 60px;
   text-align: center;
 }
 
-.device-content {
+.device-card-info {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 
-.device-name {
+.device-card-name {
   font-family: Outfit, sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--secondary-gold);
+  margin: 0;
 }
 
-.device-type {
-  font-family:
-    Space Mono,
-    monospace;
+.device-card-type {
+  font-family: Space Mono, monospace;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.device-card-location {
+  font-family: Space Mono, monospace;
   font-size: 0.8rem;
   color: var(--text-muted);
+  margin: 0;
 }
 
-.device-location {
-  font-family:
-    Space Mono,
-    monospace;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.device-badge {
+.device-card-status {
   display: inline-block;
-  padding: 6px 12px;
-  background: rgba(0, 217, 255, 0.25);
+  padding: 8px 14px;
+  background: rgba(0, 217, 255, 0.2);
   border: 1px solid rgba(0, 217, 255, 0.5);
-  border-radius: 16px;
-  font-family:
-    Space Mono,
-    monospace;
-  font-size: 0.75rem;
+  border-radius: 6px;
+  font-family: Space Mono, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
   color: var(--neon-cyan);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.device-card-status.active {
+  background: rgba(0, 217, 255, 0.3);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+}
+
+.device-card:hover .device-card-status {
+  background: rgba(0, 217, 255, 0.3);
+  border-color: var(--neon-cyan);
 }
 
 .device-badge.active {
@@ -3561,70 +3724,99 @@ footer p:last-child {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .history-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px;
-  background: rgba(0, 217, 255, 0.1);
-  border: 1px solid rgba(0, 217, 255, 0.35);
-  border-radius: 8px;
+  position: relative;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 217, 255, 0.4);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .history-card:hover {
-  background: rgba(0, 217, 255, 0.18);
   border-color: var(--neon-cyan);
-  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+  transform: translateY(-8px);
 }
 
-.history-content {
+.history-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 17, 40, 0.3) 0%,
+    rgba(10, 17, 40, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+.history-card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1;
+}
+
+.history-card-title {
+  font-family: Outfit, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-light);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.history-card-type {
+  font-family: Space Mono, monospace;
+  font-size: 0.7rem;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.history-card-meta {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  flex: 1;
 }
 
-.history-title {
-  font-family: Outfit, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.history-type {
-  font-family:
-    Space Mono,
-    monospace;
+.history-card-status {
+  font-family: Space Mono, monospace;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.history-info {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  text-align: right;
-}
-
-.history-status {
-  font-family:
-    Space Mono,
-    monospace;
-  font-size: 0.8rem;
+.history-card-status.completed {
   color: var(--neon-cyan);
-  font-weight: 600;
 }
 
-.history-date {
-  font-family:
-    Space Mono,
-    monospace;
-  font-size: 0.75rem;
+.history-card-status.progress {
+  color: var(--secondary-gold);
+}
+
+.history-card-date {
+  font-family: Space Mono, monospace;
+  font-size: 0.7rem;
   color: var(--text-muted);
 }
 
@@ -3639,11 +3831,7 @@ footer p:last-child {
 }
 
 .rightbar-card {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 217, 255, 0.15),
-    rgba(217, 70, 239, 0.15)
-  );
+  background: linear-gradient(135deg, #0a1128 0%, #1a2a5e 100%);
   border: 2px solid rgba(0, 217, 255, 0.4);
   border-radius: 12px;
   padding: 20px;
@@ -3885,3 +4073,701 @@ footer p:last-child {
     padding: 15px;
   }
 }
+
+/* ===== SETTINGS PAGE - FULLY SCOPED STYLING ===== */
+
+.settings-page {
+  background: var(--primary-dark-blue);
+}
+
+.settings-page header {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 17, 40, 0.95) 0%,
+    rgba(10, 17, 40, 0.7) 100%
+  );
+}
+
+/* WRAPPER */
+.settings-page .settings-wrapper {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  min-height: calc(100vh - 120px);
+}
+
+/* SIDEBAR */
+.settings-page .settings-sidebar {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+}
+
+.settings-page .settings-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--secondary-gold);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.settings-page .settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.settings-page .settings-nav-item {
+  padding: 14px 20px;
+  background: rgba(26, 42, 94, 0.4);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.settings-page .settings-nav-item:hover {
+  background: rgba(26, 42, 94, 0.6);
+  border-color: rgba(0, 217, 255, 0.4);
+  color: var(--neon-cyan);
+}
+
+.settings-page .settings-nav-item.danger {
+  color: #ff6b6b;
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+.settings-page .settings-nav-item.danger:hover {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+/* CONTENT */
+.settings-page .settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.settings-page .settings-section {
+  display: none;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* SECTION VISIBILITY */
+/* Show account by default */
+.settings-page .settings-section#account {
+  display: block;
+}
+
+/* Hide account when any other section is targeted */
+.settings-page .settings-content:has(#subscription:target) #account,
+.settings-page .settings-content:has(#payment:target) #account,
+.settings-page .settings-content:has(#preferences:target) #account,
+.settings-page .settings-content:has(#security:target) #account,
+.settings-page .settings-content:has(#notifications:target) #account,
+.settings-page .settings-content:has(#danger:target) #account {
+  display: none !important;
+}
+
+/* Show only the targeted section */
+.settings-page .settings-section:target {
+  display: block !important;
+}
+
+/* SECTION HEADER */
+.settings-page .section-header {
+  margin-bottom: 30px;
+}
+
+.settings-page .settings-section h2 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--secondary-gold);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.settings-page .section-description {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-family: "Outfit", sans-serif;
+  margin: 0;
+}
+
+/* CARDS */
+.settings-page .settings-card {
+  background: linear-gradient(135deg, rgba(26, 42, 94, 0.6) 0%, rgba(10, 17, 40, 0.8) 100%);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.settings-page .settings-card:hover {
+  border-color: rgba(0, 217, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+}
+
+.settings-page .card-content h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-light);
+  margin: 0 0 20px 0;
+}
+
+.settings-page .card-content p {
+  color: var(--text-muted);
+  margin: 0 0 20px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* FORMS */
+.settings-page .settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.settings-page .form-group-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-page .form-group-wrapper label {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.settings-page .form-group-wrapper input,
+.settings-page .form-group-wrapper select {
+  padding: 12px 14px;
+  background: rgba(10, 17, 40, 0.8);
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  border-radius: 6px;
+  color: var(--text-light);
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.settings-page .form-group-wrapper input:focus,
+.settings-page .form-group-wrapper select:focus {
+  outline: none;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+  background: rgba(10, 17, 40, 0.8);
+}
+
+.settings-page .form-group-wrapper input:disabled {
+  background: rgba(10, 17, 40, 0.4);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.settings-page .form-group-wrapper small {
+  font-family: "Space Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.settings-page .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.settings-page .payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* RADIO OPTIONS */
+.settings-page .radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-page .radio-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 16px;
+  background: rgba(10, 17, 40, 0.4);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.settings-page .radio-option:hover {
+  background: rgba(10, 17, 40, 0.6);
+  border-color: rgba(0, 217, 255, 0.4);
+}
+
+.settings-page .radio-option input[type="radio"] {
+  margin-top: 4px;
+  cursor: pointer;
+  accent-color: var(--neon-cyan);
+}
+
+.settings-page .radio-option input[type="radio"]:checked + .radio-label {
+  color: var(--neon-cyan);
+}
+
+.settings-page .radio-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-light);
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.settings-page .radio-label small {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* TOGGLE */
+.settings-page .toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.settings-page .toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.settings-page .toggle-switch input {
+  display: none;
+}
+
+.settings-page .toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 217, 255, 0.2);
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  border-radius: 28px;
+  transition: all 0.3s ease;
+}
+
+.settings-page .toggle-slider::before {
+  content: "";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 2px;
+  background-color: var(--neon-cyan);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.settings-page .toggle-switch input:checked + .toggle-slider {
+  background-color: rgba(0, 217, 255, 0.3);
+  border-color: var(--neon-cyan);
+}
+
+.settings-page .toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(22px);
+}
+
+.settings-page .toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-page .toggle-text span {
+  color: var(--text-light);
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.settings-page .toggle-text small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* PLAN DETAILS */
+.settings-page .plan-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.settings-page .plan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-page .plan-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--secondary-gold);
+}
+
+.settings-page .plan-price {
+  font-size: 1.1rem;
+  color: var(--neon-cyan);
+  font-weight: 700;
+}
+
+.settings-page .plan-features {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.settings-page .plan-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.settings-page .status-badge {
+  padding: 6px 14px;
+  background: rgba(0, 217, 255, 0.2);
+  border: 1px solid rgba(0, 217, 255, 0.5);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  text-transform: uppercase;
+}
+
+.settings-page .status-badge.active {
+  background: rgba(0, 217, 255, 0.25);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
+}
+
+.settings-page .renewal-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.settings-page .plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.settings-page .plan-option {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background: rgba(10, 17, 40, 0.6);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.settings-page .plan-option:hover {
+  border-color: rgba(0, 217, 255, 0.4);
+  background: rgba(10, 17, 40, 0.8);
+}
+
+/* PAYMENT */
+.settings-page .payment-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.settings-page .card-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.settings-page .card-icon {
+  font-size: 2rem;
+}
+
+.settings-page .card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-page .card-type {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.settings-page .card-number {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: "Space Mono", monospace;
+}
+
+.settings-page .card-expiry {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* SESSIONS */
+.settings-page .sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-page .session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: rgba(10, 17, 40, 0.5);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.settings-page .session-item.current {
+  border-color: var(--neon-cyan);
+  background: rgba(0, 217, 255, 0.1);
+}
+
+.settings-page .session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.settings-page .session-device {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.settings-page .session-location {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.settings-page .session-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: "Space Mono", monospace;
+}
+
+.settings-page .session-badge {
+  padding: 6px 12px;
+  background: var(--neon-cyan);
+  color: var(--primary-dark-blue);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* DANGER */
+.settings-page .danger-card {
+  border-color: rgba(255, 107, 107, 0.3);
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(10, 17, 40, 0.8) 100%);
+}
+
+.settings-page .danger-card:hover {
+  border-color: rgba(255, 107, 107, 0.5);
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.15);
+}
+
+/* BUTTONS */
+.settings-page .btn-save {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  padding: 14px 40px;
+  background: linear-gradient(90deg, var(--secondary-gold) 0%, var(--secondary-gold) 100%);
+  color: var(--primary-dark-blue);
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Outfit", sans-serif;
+  align-self: flex-start;
+}
+
+.settings-page .btn-save:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.settings-page .btn-secondary {
+  padding: 12px 28px;
+  background: rgba(0, 217, 255, 0.15);
+  border: 1px solid rgba(0, 217, 255, 0.5);
+  color: var(--neon-cyan);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Outfit", sans-serif;
+}
+
+.settings-page .btn-secondary:hover {
+  background: rgba(0, 217, 255, 0.25);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+
+.settings-page .btn-danger {
+  padding: 14px 40px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Outfit", sans-serif;
+  align-self: flex-start;
+}
+
+.settings-page .btn-danger:hover {
+  background: #ff5252;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+}
+
+.settings-page .btn-small-danger {
+  padding: 8px 16px;
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  color: #ff6b6b;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Outfit", sans-serif;
+}
+
+.settings-page .btn-small-danger:hover {
+  background: rgba(255, 107, 107, 0.3);
+  border-color: #ff6b6b;
+}
+
+.settings-page .feature-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-page .feature-info span {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.settings-page .feature-info small {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .settings-page .settings-wrapper {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+
+  .settings-page .settings-sidebar {
+    position: static;
+  }
+
+  .settings-page .settings-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .settings-page .settings-nav-item {
+    flex: 1;
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-page .settings-wrapper {
+    padding: 30px 15px;
+  }
+
+  .settings-page .settings-sidebar {
+    margin-bottom: 20px;
+  }
+
+  .settings-page .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-page .plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-page .payment-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .settings-page .plan-status {
+    align-items: flex-start;
+  }
+}
+
+

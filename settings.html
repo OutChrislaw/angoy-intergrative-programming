@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body class="settings-page">
     <!-- Header -->
     <header>
       <h1>
@@ -20,257 +20,426 @@
     </header>
 
     <!-- Settings Container -->
-    <div class="settings-container">
-      <div class="settings-wrapper">
-        <!-- Sidebar Navigation -->
-        <aside class="settings-sidebar">
-          <h3>Settings</h3>
-          <nav class="settings-nav">
-            <a
-              href="#account"
-              class="settings-nav-item active"
-              data-section="account"
-            >
-              Account Settings
-            </a>
-            <a href="#email" class="settings-nav-item" data-section="email">
-              Email Preferences
-            </a>
-            <a
-              href="#security"
-              class="settings-nav-item"
-              data-section="security"
-            >
-              Security
-            </a>
-            <a
-              href="#appearance"
-              class="settings-nav-item"
-              data-section="appearance"
-            >
-              Appearance
-            </a>
-            <a
-              href="#notifications"
-              class="settings-nav-item"
-              data-section="notifications"
-            >
-              Notifications
-            </a>
-            <a
-              href="#danger"
-              class="settings-nav-item danger"
-              data-section="danger"
-            >
-              Danger Zone
-            </a>
-          </nav>
-        </aside>
+    <div class="settings-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="settings-sidebar">
+        <h3 class="settings-title">Settings</h3>
+        <nav class="settings-nav">
+          <a href="#account" class="settings-nav-item">
+            Account Settings
+          </a>
+          <a href="#subscription" class="settings-nav-item">
+            Subscription
+          </a>
+          <a href="#payment" class="settings-nav-item">
+            Payment Method
+          </a>
+          <a href="#preferences" class="settings-nav-item">
+            Playback Preferences
+          </a>
+          <a href="#security" class="settings-nav-item">
+            Security
+          </a>
+          <a href="#notifications" class="settings-nav-item">
+            Notifications
+          </a>
+          <a href="#danger" class="settings-nav-item danger">
+            Danger Zone
+          </a>
+        </nav>
+      </aside>
 
-        <!-- Main Content -->
-        <main class="settings-content">
-          <!-- Account Settings Section -->
-          <section class="settings-section active" id="account">
+      <!-- Main Content -->
+      <main class="settings-content">
+        <!-- Account Settings Section -->
+        <section class="settings-section" id="account">
+          <div class="section-header">
             <h2>Account Settings</h2>
-            <p class="section-description">Manage your account information</p>
+            <p class="section-description">Manage your personal information</p>
+          </div>
 
-            <form class="settings-form">
-              <div class="form-group-wrapper">
-                <label for="fullname">Full Name</label>
-                <input type="text" id="fullname" value="Christian Angoy" />
-              </div>
+          <form class="settings-form">
+            <div class="form-group-wrapper">
+              <label for="fullname">Full Name</label>
+              <input type="text" id="fullname" value="Christian Angoy" />
+            </div>
 
-              <div class="form-group-wrapper">
-                <label for="email-display">Email Address</label>
-                <input
-                  type="email"
-                  id="email-display"
-                  value="christianangoy2023@gmail.com"
-                  disabled
-                />
-              </div>
+            <div class="form-group-wrapper">
+              <label for="email-display">Email Address</label>
+              <input
+                type="email"
+                id="email-display"
+                value="christianangoy2023@gmail.com"
+                disabled
+              />
+              <small>Contact our support team to change your email</small>
+            </div>
 
-              <button type="submit" class="btn-save">Save Changes</button>
-            </form>
-          </section>
+            <div class="form-group-wrapper">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="(555) 123-4567" />
+            </div>
 
-          <!-- Email Preferences Section -->
-          <section class="settings-section" id="email">
-            <h2>Email Preferences</h2>
-            <p class="section-description">
-              Manage your email and change settings
-            </p>
+            <div class="form-group-wrapper">
+              <label for="country">Country</label>
+              <select id="country">
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+                <option value="UK">United Kingdom</option>
+                <option value="AU">Australia</option>
+              </select>
+            </div>
 
-            <form class="settings-form">
-              <div class="form-group-wrapper">
-                <label for="current-email-s">Current Email</label>
-                <input
-                  type="email"
-                  id="current-email-s"
-                  value="christianangoy2023@gmail.com"
-                  disabled
-                />
-              </div>
+            <button type="submit" class="btn-save">Save Changes</button>
+          </form>
+        </section>
 
-              <div class="form-group-wrapper">
-                <label for="new-email-s">Change Email</label>
-                <input
-                  type="email"
-                  id="new-email-s"
-                  placeholder="Enter new email address"
-                />
-                <small
-                  >This field will be synchronized with an external identity
-                  provider in later phases.</small
-                >
-              </div>
+        <!-- Subscription Section -->
+        <section class="settings-section" id="subscription">
+          <div class="section-header">
+            <h2>Subscription</h2>
+            <p class="section-description">Manage your subscription plan</p>
+          </div>
 
-              <button type="submit" class="btn-save">Update Email</button>
-            </form>
-          </section>
-
-          <!-- Security Section -->
-          <section class="settings-section" id="security">
-            <h2>Security</h2>
-            <p class="section-description">
-              Manage your password and security settings
-            </p>
-
-            <form class="settings-form">
-              <div class="form-group-wrapper">
-                <label for="current-password-s">Current Password</label>
-                <input
-                  type="password"
-                  id="current-password-s"
-                  placeholder="Enter your current password"
-                />
-              </div>
-
-              <div class="form-group-wrapper">
-                <label for="new-password-s">New Password</label>
-                <input
-                  type="password"
-                  id="new-password-s"
-                  placeholder="Enter new password"
-                />
-                <small
-                  >Argon2id hashing with memory-hard parameters will be
-                  activated in future builds.</small
-                >
-              </div>
-
-              <div class="form-group-wrapper">
-                <label for="confirm-password-s">Confirm New Password</label>
-                <input
-                  type="password"
-                  id="confirm-password-s"
-                  placeholder="Confirm new password"
-                />
-              </div>
-
-              <button type="submit" class="btn-save">Change Password</button>
-            </form>
-          </section>
-
-          <!-- Appearance Section -->
-          <section class="settings-section" id="appearance">
-            <h2>Appearance</h2>
-            <p class="section-description">Customize how BIGGY FLIX looks</p>
-
-            <form class="settings-form">
-              <div class="form-group-wrapper">
-                <label for="theme-select-s">Theme Preference</label>
-                <select id="theme-select-s">
-                  <option value="dark">Dark Mode</option>
-                  <option value="light">Light Mode</option>
-                  <option value="auto">Auto (System Default)</option>
-                </select>
-              </div>
-
-              <div class="form-checkbox-wrapper">
-                <label for="dark-theme-s">
-                  <input type="checkbox" id="dark-theme-s" checked />
-                  <span>Dark Theme (Default)</span>
-                </label>
-              </div>
-
-              <button type="submit" class="btn-save">Save Preferences</button>
-            </form>
-          </section>
-
-          <!-- Notifications Section -->
-          <section class="settings-section" id="notifications">
-            <h2>Notifications</h2>
-            <p class="section-description">
-              Control your notification settings
-            </p>
-
-            <form class="settings-form">
-              <div class="form-checkbox-wrapper">
-                <label for="email-notif">
-                  <input type="checkbox" id="email-notif" checked />
-                  <span>Email Notifications</span>
-                </label>
-              </div>
-
-              <div class="form-checkbox-wrapper">
-                <label for="push-notif">
-                  <input type="checkbox" id="push-notif" checked />
-                  <span>Push Notifications</span>
-                </label>
-              </div>
-
-              <div class="form-checkbox-wrapper">
-                <label for="sms-notif">
-                  <input type="checkbox" id="sms-notif" />
-                  <span>SMS Notifications</span>
-                </label>
-              </div>
-
-              <button type="submit" class="btn-save">
-                Save Notification Settings
-              </button>
-            </form>
-          </section>
-
-          <!-- Danger Zone Section -->
-          <section class="settings-section danger-section" id="danger">
-            <h2>Danger Zone</h2>
-            <p class="section-description">
-              Irreversible and destructive actions
-            </p>
-
-            <div class="danger-actions">
-              <div class="danger-item">
-                <div class="danger-info">
-                  <h4>Delete Account</h4>
-                  <p>Permanently delete your account and all associated data</p>
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Current Plan</h3>
+              <div class="plan-details">
+                <div class="plan-info">
+                  <span class="plan-name">Premium</span>
+                  <span class="plan-price">$14.99/month</span>
+                  <span class="plan-features">4K UHD • 4 Simultaneous Streams • Offline Downloads</span>
                 </div>
-                <button type="button" class="btn-danger">Delete Account</button>
+                <div class="plan-status">
+                  <span class="status-badge active">Active</span>
+                  <span class="renewal-date">Renews on March 4, 2026</span>
+                </div>
               </div>
             </div>
-          </section>
-        </main>
-      </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Other Plans</h3>
+              <div class="plans-grid">
+                <div class="plan-option">
+                  <span class="plan-name">Standard</span>
+                  <span class="plan-price">$9.99/month</span>
+                  <span class="plan-features">1080p • 2 Streams • No Downloads</span>
+                  <button class="btn-secondary" type="button">Switch Plan</button>
+                </div>
+                <div class="plan-option">
+                  <span class="plan-name">Basic</span>
+                  <span class="plan-price">$5.99/month</span>
+                  <span class="plan-features">720p • 1 Stream • Mobile Only</span>
+                  <button class="btn-secondary" type="button">Switch Plan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Auto-Renewal</h3>
+              <div class="toggle-group">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div class="toggle-text">
+                  <span>Auto-Renewal Enabled</span>
+                  <small>Your subscription will automatically renew on the due date</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-secondary" style="margin-top: 20px;">Cancel Subscription</button>
+        </section>
+
+        <!-- Payment Section -->
+        <section class="settings-section" id="payment">
+          <div class="section-header">
+            <h2>Payment Method</h2>
+            <p class="section-description">Manage your billing information</p>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Current Payment Method</h3>
+              <div class="payment-info">
+                <div class="card-display">
+                  <span class="card-icon">💳</span>
+                  <div class="card-details">
+                    <span class="card-type">Visa</span>
+                    <span class="card-number">**** **** **** 4242</span>
+                    <span class="card-expiry">Expires 12/2027</span>
+                  </div>
+                </div>
+                <button class="btn-secondary" type="button">Edit Payment</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Add Payment Method</h3>
+              <form class="payment-form">
+                <div class="form-group-wrapper">
+                  <label for="card-name">Cardholder Name</label>
+                  <input type="text" id="card-name" placeholder="John Doe" />
+                </div>
+                <div class="form-group-wrapper">
+                  <label for="card-number">Card Number</label>
+                  <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group-wrapper">
+                    <label for="card-expiry">Expiration Date</label>
+                    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" />
+                  </div>
+                  <div class="form-group-wrapper">
+                    <label for="card-cvv">CVV</label>
+                    <input type="text" id="card-cvv" placeholder="123" maxlength="3" />
+                  </div>
+                </div>
+                <button type="submit" class="btn-save">Add Card</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preferences Section -->
+        <section class="settings-section" id="preferences">
+          <div class="section-header">
+            <h2>Playback Preferences</h2>
+            <p class="section-description">Customize your viewing experience</p>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Video Quality</h3>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="quality" value="auto" checked />
+                  <span class="radio-label">
+                    <span>Auto (Recommended)</span>
+                    <small>Automatically adjust based on your connection</small>
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="quality" value="4k" />
+                  <span class="radio-label">
+                    <span>4K Ultra HD</span>
+                    <small>Requires high-speed internet</small>
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="quality" value="1080p" />
+                  <span class="radio-label">
+                    <span>1080p HD</span>
+                    <small>Best for most devices</small>
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="quality" value="720p" />
+                  <span class="radio-label">
+                    <span>720p</span>
+                    <small>Lower bandwidth usage</small>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Subtitles & Captions</h3>
+              <div class="form-group-wrapper">
+                <label for="subtitle-lang">Default Subtitle Language</label>
+                <select id="subtitle-lang">
+                  <option value="english">English</option>
+                  <option value="spanish">Spanish</option>
+                  <option value="french">French</option>
+                  <option value="german">German</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Playback Settings</h3>
+              <div class="toggle-group">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div class="toggle-text">
+                  <span>Autoplay Next Episode</span>
+                  <small>Automatically play the next episode when current finishes</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-save">Save Preferences</button>
+        </section>
+
+        <!-- Security Section -->
+        <section class="settings-section" id="security">
+          <div class="section-header">
+            <h2>Security</h2>
+            <p class="section-description">Protect your account</p>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Change Password</h3>
+              <form class="settings-form">
+                <div class="form-group-wrapper">
+                  <label for="current-password">Current Password</label>
+                  <input type="password" id="current-password" placeholder="Enter current password" />
+                </div>
+                <div class="form-group-wrapper">
+                  <label for="new-password">New Password</label>
+                  <input type="password" id="new-password" placeholder="Enter new password" />
+                </div>
+                <div class="form-group-wrapper">
+                  <label for="confirm-password">Confirm Password</label>
+                  <input type="password" id="confirm-password" placeholder="Confirm new password" />
+                </div>
+                <button type="submit" class="btn-save">Update Password</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Two-Factor Authentication</h3>
+              <div class="feature-info">
+                <span>Add an extra layer of security to your account</span>
+                <small>Use an authenticator app to verify your login</small>
+              </div>
+              <button class="btn-secondary" type="button" style="margin-top: 15px;">Enable 2FA</button>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Active Sessions</h3>
+              <div class="sessions-list">
+                <div class="session-item current">
+                  <div class="session-info">
+                    <span class="session-device">💻 MacBook Pro - Web Browser</span>
+                    <span class="session-location">Los Angeles, CA</span>
+                    <span class="session-date">Current session • Last active now</span>
+                  </div>
+                  <span class="session-badge">CURRENT</span>
+                </div>
+                <div class="session-item">
+                  <div class="session-info">
+                    <span class="session-device">📱 iPhone 14 Pro - Mobile App</span>
+                    <span class="session-location">Los Angeles, CA</span>
+                    <span class="session-date">Last active 2 hours ago</span>
+                  </div>
+                  <button class="btn-small-danger" type="button">Sign Out</button>
+                </div>
+                <div class="session-item">
+                  <div class="session-info">
+                    <span class="session-device">📺 Living Room TV - Smart TV</span>
+                    <span class="session-location">Los Angeles, CA</span>
+                    <span class="session-date">Last active 1 day ago</span>
+                  </div>
+                  <button class="btn-small-danger" type="button">Sign Out</button>
+                </div>
+              </div>
+              <button class="btn-secondary" type="button" style="margin-top: 15px;">Sign Out All Devices</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Notifications Section -->
+        <section class="settings-section" id="notifications">
+          <div class="section-header">
+            <h2>Notifications</h2>
+            <p class="section-description">Control how we contact you</p>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Email Notifications</h3>
+              <div class="toggle-group">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div class="toggle-text">
+                  <span>New Releases & Recommendations</span>
+                  <small>Get notified about new shows and movies personalized for you</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Account Activity</h3>
+              <div class="toggle-group">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div class="toggle-text">
+                  <span>Security Alerts</span>
+                  <small>Be notified of unusual account activity and login attempts</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <div class="card-content">
+              <h3>Billing Notifications</h3>
+              <div class="toggle-group">
+                <label class="toggle-switch">
+                  <input type="checkbox" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div class="toggle-text">
+                  <span>Payment Reminders</span>
+                  <small>Receive notifications about upcoming payments and renewals</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Danger Zone Section -->
+        <section class="settings-section danger-section" id="danger">
+          <div class="section-header">
+            <h2>Danger Zone</h2>
+            <p class="section-description">Irreversible and destructive actions</p>
+          </div>
+
+          <div class="settings-card danger-card">
+            <div class="card-content">
+              <h3>Delete Account</h3>
+              <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+              <button type="button" class="btn-danger">Delete My Account</button>
+            </div>
+          </div>
+
+          <div class="settings-card danger-card">
+            <div class="card-content">
+              <h3>Download My Data</h3>
+              <p>Download a copy of your personal data and account information before deleting.</p>
+              <button type="button" class="btn-secondary">Download Data</button>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
-
-    <script>
-      document.querySelectorAll(".settings-nav-item").forEach((item) => {
-        item.addEventListener("click", (e) => {
-          e.preventDefault();
-          const sectionId = item.dataset.section;
-
-          document
-            .querySelectorAll(".settings-nav-item")
-            .forEach((i) => i.classList.remove("active"));
-          document
-            .querySelectorAll(".settings-section")
-            .forEach((s) => s.classList.remove("active"));
-
-          item.classList.add("active");
-          document.getElementById(sectionId).classList.add("active");
-        });
-      });
-    </script>
   </body>
 </html>
