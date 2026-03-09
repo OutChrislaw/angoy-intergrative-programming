@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - BIGGY FLIX</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Additional styles for left navigation layout */
+      .admin-dashboard-layout {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+        align-items: flex-start;
+      }
+
+      .admin-left-sidebar {
+        flex: 0 0 280px;
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        align-self: flex-start;
+      }
+
+      .admin-main-content {
+        flex: 1;
+        min-width: 0; /* Prevents flex item from overflowing */
+      }
+
+      .admin-nav-vertical {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 42, 94, 0.95) 0%,
+          rgba(10, 17, 40, 0.95) 100%
+        );
+        border: 2px solid var(--neon-cyan);
+        border-radius: 16px;
+        padding: 25px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        width: 100%;
+      }
+
+      .admin-nav-vertical a {
+        padding: 14px 20px;
+        background: transparent;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        color: var(--text-light);
+        text-decoration: none;
+        font-family: "Outfit", sans-serif;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 0.95rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .admin-nav-vertical a i {
+        width: 24px;
+        color: var(--neon-cyan);
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        text-align: center;
+      }
+
+      .admin-nav-vertical a:hover {
+        background: rgba(0, 217, 255, 0.1);
+        border-color: var(--neon-cyan);
+        transform: translateX(5px);
+      }
+
+      .admin-nav-vertical a:hover i {
+        color: var(--secondary-gold);
+      }
+
+      .admin-nav-vertical a.active {
+        background: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 20px var(--neon-cyan);
+      }
+
+      .admin-nav-vertical a.active i {
+        color: var(--primary-dark-blue);
+      }
+
+      .admin-nav-vertical .nav-divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--neon-cyan),
+          transparent
+        );
+        margin: 15px 0;
+      }
+
+      .admin-nav-vertical .nav-header {
+        color: var(--secondary-gold);
+        font-family: "Orbitron", sans-serif;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 10px 20px 5px;
+        margin: 0;
+        opacity: 0.8;
+      }
+
+      /* Remove the old horizontal admin-nav */
+      .admin-nav {
+        display: none !important;
+      }
+
+      /* Adjust container padding to maximize space */
+      body.admin-page .admin-container {
+        max-width: 1600px;
+        margin: 30px auto;
+        padding: 0 30px 60px;
+      }
+
+      /* Make stats grid smaller to fit better */
+      body.admin-page .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      /* Adjust dashboard grid for better fit */
+      body.admin-page .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1200px) {
+        body.admin-page .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 992px) {
+        .admin-dashboard-layout {
+          flex-direction: column;
+        }
+
+        .admin-left-sidebar {
+          flex: none;
+          position: static;
+          width: 100%;
+        }
+
+        .admin-nav-vertical {
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: 15px;
+        }
+
+        .admin-nav-vertical a {
+          flex: 1 1 auto;
+          min-width: 150px;
+        }
+
+        .admin-nav-vertical .nav-header,
+        .admin-nav-vertical .nav-divider {
+          display: none;
+        }
+
+        body.admin-page .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .admin-nav-vertical a {
+          min-width: 100%;
+        }
+
+        body.admin-page .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Ensure the admin header doesn't take too much space */
+      body.admin-page .admin-header {
+        padding: 25px;
+        margin-bottom: 25px;
+      }
+
+      body.admin-page .admin-header h1 {
+        font-size: 2.2rem;
+      }
+
+      /* Make cards slightly smaller for better fit */
+      body.admin-page .dashboard-card {
+        padding: 25px;
+      }
+
+      body.admin-page .dashboard-card h3 {
+        font-size: 1.6rem;
+      }
+
+      body.admin-page .dashboard-card i {
+        font-size: 2.4rem;
+        padding: 12px;
+      }
+    </style>
+  </head>
+  <body class="admin-page">
+    <!-- Header -->
+    <header>
+      <h1>
+        <a href="index.html" style="text-decoration: none; color: inherit"
+          >BIGGY FLIX</a
+        >
+      </h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Logout</a>
+      </nav>
+    </header>
+
+    <div class="admin-container">
+      <!-- Admin Header / Welcome Panel -->
+      <div class="admin-header">
+        <h1>
+          <i class="fas fa-crown" style="margin-right: 15px"></i>Admin Dashboard
+        </h1>
+        <p class="welcome-text">
+          <i class="fas fa-hand-peace"></i> Welcome back, Admin (Master Access)
+        </p>
+        <p class="manage-text">
+          <i class="fas fa-sliders-h" style="margin-right: 10px"></i> Use the
+          menu on the left to manage system data, users, and platform settings
+        </p>
+      </div>
+
+      <!-- Dashboard Layout with Left Navigation -->
+      <div class="admin-dashboard-layout">
+        <!-- Left Sidebar Navigation (fixed position) -->
+        <aside class="admin-left-sidebar">
+          <div class="admin-nav-vertical">
+            <div class="nav-header">MAIN NAVIGATION</div>
+            <a href="admin.html" class="active">
+              <i class="fas fa-chart-pie"></i> Dashboard
+            </a>
+            <a href="manage-users.html">
+              <i class="fas fa-users-cog"></i> Manage Users
+            </a>
+            <a href="add-user.html">
+              <i class="fas fa-user-plus"></i> Add New User
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <div class="nav-header">SYSTEM MANAGEMENT</div>
+            <a href="#" onclick="alert('📁 Content Management')">
+              <i class="fas fa-video"></i> Content
+            </a>
+            <a href="#" onclick="alert('💰 Billing Management')">
+              <i class="fas fa-credit-card"></i> Billing
+            </a>
+            <a href="#" onclick="alert('🤖 AI Settings')">
+              <i class="fas fa-robot"></i> AI Engine
+            </a>
+            <a href="#" onclick="alert('📊 Analytics')">
+              <i class="fas fa-chart-line"></i> Analytics
+            </a>
+            <a href="#" onclick="alert('⚙️ Settings')">
+              <i class="fas fa-cog"></i> System Settings
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <div class="nav-header">SECURITY</div>
+            <a
+              href="#"
+              onclick="alert('🔒 Security Center')"
+              style="color: var(--neon-purple)"
+            >
+              <i class="fas fa-shield-alt"></i> Security Center
+            </a>
+            <a
+              href="#"
+              onclick="alert('📝 Audit Logs')"
+              style="color: var(--neon-pink)"
+            >
+              <i class="fas fa-history"></i> Audit Logs
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <div class="nav-header">QUICK STATS</div>
+            <div style="padding: 15px 20px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 10px;
+                  color: var(--text-muted);
+                  font-size: 0.9rem;
+                "
+              >
+                <span>Server Status:</span>
+                <span style="color: #00ff00">● Online</span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 10px;
+                  color: var(--text-muted);
+                  font-size: 0.9rem;
+                "
+              >
+                <span>Database:</span>
+                <span style="color: #00ff00">● Connected</span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  color: var(--text-muted);
+                  font-size: 0.9rem;
+                "
+              >
+                <span>API:</span>
+                <span style="color: #00ff00">● 100%</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content Area (takes remaining space) -->
+        <main class="admin-main-content">
+          <!-- Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <i class="fas fa-users"></i>
+              <div class="stat-number">1,482</div>
+              <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-film"></i>
+              <div class="stat-number">2,431</div>
+              <div class="stat-label">Movies & Series</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-clock"></i>
+              <div class="stat-number">347</div>
+              <div class="stat-label">Active Sessions</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-flag"></i>
+              <div class="stat-number">12</div>
+              <div class="stat-label">Reports</div>
+            </div>
+          </div>
+
+          <!-- Dashboard Menu Cards -->
+          <h2
+            style="
+              font-size: 1.8rem;
+              color: var(--secondary-gold);
+              margin-bottom: 20px;
+              font-family: &quot;Orbitron&quot;, sans-serif;
+            "
+          >
+            <i
+              class="fas fa-database"
+              style="color: var(--neon-cyan); margin-right: 15px"
+            ></i
+            >System Data Manager
+          </h2>
+
+          <div class="dashboard-grid">
+            <!-- Users Management -->
+            <div
+              class="dashboard-card"
+              onclick="window.location.href = 'manage-users.html'"
+            >
+              <i class="fas fa-users-cog"></i>
+              <h3>Users</h3>
+              <p>
+                Manage user accounts, roles, permissions, and view user activity
+                logs. Create, suspend, or delete users.
+              </p>
+              <span class="card-badge"
+                ><i class="fas fa-arrow-right"></i> Manage Users</span
+              >
+            </div>
+
+            <!-- Content Management -->
+            <div
+              class="dashboard-card"
+              onclick="
+                alert('📁 Content Management - Would open content manager')
+              "
+            >
+              <i class="fas fa-video"></i>
+              <h3>Content</h3>
+              <p>
+                Add, edit, or remove movies and series. Update metadata, genres,
+                age ratings, and featured content.
+              </p>
+              <span class="card-badge"
+                ><i class="fas fa-arrow-right"></i> Manage Content</span
+              >
+            </div>
+
+            <!-- Billing & Plans -->
+            <div
+              class="dashboard-card"
+              onclick="
+                alert('💰 Billing Management - Would open billing manager')
+              "
+            >
+              <i class="fas fa-credit-card"></i>
+              <h3>Billing & Plans</h3>
+              <p>
+                Manage subscription tiers, pricing, payment methods, invoices,
+                and promotional discounts.
+              </p>
+              <span class="card-badge"
+                ><i class="fas fa-arrow-right"></i> Manage Billing</span
+              >
+            </div>
+
+            <!-- AI Engine -->
+            <div
+              class="dashboard-card"
+              onclick="alert('🤖 AI Configuration - Would open AI settings')"
+            >
+              <i class="fas fa-robot"></i>
+              <h3>AI Engine</h3>
+              <p>
+                Configure recommendation algorithms, trending picks, and
+                personalization settings.
+              </p>
+              <span class="card-badge"
+                ><i class="fas fa-arrow-right"></i> AI Settings</span
+              >
+            </div>
+
+            <!-- Social Features -->
+            <div
+              class="dashboard-card"
+              onclick="
+                alert('👥 Social Management - Would open social settings')
+              "
+            >
+              <i class="fas fa-users-between-lines"></i>
+              <h3>Social Features</h3>
+              <p>
+                Manage watch parties, chat moderation, community guidelines, and
+                user interactions.
+              </p>
+              <span class="card-badge"
+                ><i class="fas fa-arrow-right"></i> Social Settings</span
+              >
+            </div>
+
+            <!-- Analytics -->
+            <div
+              class="dashboard-card"
+              onclick="alert('📊 Analytics Dashboard - Would open analytics')"
+            >
+              <i class="fas fa-chart-line"></i>
+              <h3>Analytics</h3>
+              <p>
+                View platform metrics, user behavior, content performance, and
+                system logs.
+              </p>
+              <span class="card-badge"
+                ><i class="fas fa-arrow-right"></i> View Analytics</span
+              >
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div
+            style="
+              background: rgba(26, 42, 94, 0.6);
+              border: 2px dashed var(--neon-cyan);
+              border-radius: 30px;
+              padding: 30px;
+              margin-top: 30px;
+            "
+          >
+            <h3
+              style="
+                color: var(--secondary-gold);
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+              "
+            >
+              <i class="fas fa-bolt" style="color: var(--neon-cyan)"></i> Quick
+              Actions
+            </h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px">
+              <span
+                class="card-badge"
+                style="padding: 12px 25px; cursor: pointer"
+                onclick="window.location.href = 'add-user.html'"
+              >
+                <i class="fas fa-user-plus"></i> Add New User
+              </span>
+              <span
+                class="card-badge"
+                style="padding: 12px 25px; cursor: pointer"
+                onclick="alert('➕ Add New Content')"
+              >
+                <i class="fas fa-plus-circle"></i> Add Movie/Series
+              </span>
+              <span
+                class="card-badge"
+                style="padding: 12px 25px; cursor: pointer"
+                onclick="alert('📊 Generate Report')"
+              >
+                <i class="fas fa-file-pdf"></i> Generate Report
+              </span>
+              <span
+                class="card-badge"
+                style="padding: 12px 25px; cursor: pointer"
+                onclick="alert('🔄 System Backup')"
+              >
+                <i class="fas fa-database"></i> Backup System
+              </span>
+            </div>
+          </div>
+
+          <!-- Recent Activity Preview -->
+          <div class="table-container" style="margin-top: 40px">
+            <h2><i class="fas fa-history"></i> Recent Admin Activity</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Admin</th>
+                  <th>Action</th>
+                  <th>Target</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-03-09 10:23 AM</td>
+                  <td>admin@biggyflix.com</td>
+                  <td>User Created</td>
+                  <td>john.doe@email.com</td>
+                </tr>
+                <tr>
+                  <td>2026-03-09 09:15 AM</td>
+                  <td>admin@biggyflix.com</td>
+                  <td>Content Updated</td>
+                  <td>Inception (Movie)</td>
+                </tr>
+                <tr>
+                  <td>2026-03-08 04:45 PM</td>
+                  <td>admin@biggyflix.com</td>
+                  <td>Subscription Modified</td>
+                  <td>User #2341</td>
+                </tr>
+                <tr>
+                  <td>2026-03-08 02:30 PM</td>
+                  <td>admin@biggyflix.com</td>
+                  <td>Report Resolved</td>
+                  <td>Report #128</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Admin Dashboard - BIGGY FLIX Management</p>
+      <ul>
+        <li><a href="#">System Status</a></li>
+        <li><a href="#">Audit Logs</a></li>
+        <li><a href="#">Admin Guide</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+      <p>© BIGGY FLIX - Admin Panel v1.0</p>
+    </footer>
+
+    <script>
+      // Check if user is logged in and has admin role
+      document.addEventListener("DOMContentLoaded", function () {
+        // Simulate checking user role from sessionStorage
+        // In a real implementation, this would check the actual logged-in user
+        const loggedInUser = sessionStorage.getItem("loggedInUser");
+
+        if (!loggedInUser) {
+          // If no user is logged in, redirect to login
+          // Uncomment the line below to enable redirect
+          // window.location.href = 'login.html';
+          console.log("Redirect would happen here - no user logged in");
+        } else {
+          try {
+            const user = JSON.parse(loggedInUser);
+            // Check if user has admin role
+            // For demo purposes, we're checking email
+            // In production, you'd have a role property
+            if (user.email !== "admin@biggyflix.com") {
+              console.log("Non-admin user detected - would redirect");
+              // window.location.href = 'index.html';
+            }
+          } catch (e) {
+            console.log("Error parsing user data");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

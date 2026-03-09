@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Users - BIGGY FLIX Admin</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-page">
+    <!-- Header -->
+    <header>
+      <h1>
+        <a href="index.html" style="text-decoration: none; color: inherit"
+          >BIGGY FLIX</a
+        >
+      </h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Logout</a>
+      </nav>
+    </header>
+
+    <div class="admin-container">
+      <!-- Back Button -->
+      <a href="admin.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+
+      <!-- Page Header -->
+      <div class="admin-header">
+        <h1><i class="fas fa-users-cog"></i> Manage Users</h1>
+        <p class="welcome-text">
+          <i class="fas fa-database"></i> View and manage all registered users
+        </p>
+        <p class="manage-text">
+          Total Users: <span id="user-count">0</span> |
+          <i class="fas fa-trash-alt"></i> Click Delete to remove a user (demo)
+        </p>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-container">
+        <h2><i class="fas fa-list"></i> Registered Users</h2>
+        <table id="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Plan</th>
+              <th>Member Since</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body">
+            <!-- Users will be loaded dynamically via JavaScript -->
+            <tr id="loading-row">
+              <td colspan="8" style="text-align: center; padding: 40px">
+                <i class="fas fa-spinner fa-spin"></i> Loading users...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Success Message (hidden by default) -->
+        <div id="success-message" class="success-message" style="display: none">
+          <i class="fas fa-check-circle"></i>
+          <span id="success-text">User deleted successfully!</span>
+        </div>
+
+        <!-- Quick Stats -->
+        <div
+          style="margin-top: 30px; display: flex; gap: 20px; flex-wrap: wrap"
+        >
+          <div
+            style="
+              background: rgba(0, 217, 255, 0.1);
+              padding: 15px;
+              border-radius: 10px;
+            "
+          >
+            <span style="color: var(--neon-cyan); font-weight: 600"
+              >Active Users:
+              <span id="active-users" style="color: var(--secondary-gold)"
+                >0</span
+              ></span
+            >
+          </div>
+          <div
+            style="
+              background: rgba(0, 217, 255, 0.1);
+              padding: 15px;
+              border-radius: 10px;
+            "
+          >
+            <span style="color: var(--neon-cyan); font-weight: 600"
+              >Suspended:
+              <span id="suspended-users" style="color: var(--secondary-gold)"
+                >0</span
+              ></span
+            >
+          </div>
+          <div
+            style="
+              background: rgba(0, 217, 255, 0.1);
+              padding: 15px;
+              border-radius: 10px;
+            "
+          >
+            <span style="color: var(--neon-cyan); font-weight: 600"
+              >Admins:
+              <span id="admin-count" style="color: var(--secondary-gold)"
+                >0</span
+              ></span
+            >
+          </div>
+          <div
+            style="
+              background: rgba(0, 217, 255, 0.1);
+              padding: 15px;
+              border-radius: 10px;
+            "
+          >
+            <span style="color: var(--neon-cyan); font-weight: 600"
+              >Moderators:
+              <span id="moderator-count" style="color: var(--secondary-gold)"
+                >0</span
+              ></span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div style="text-align: center; margin-top: 20px">
+        <button
+          class="add-btn"
+          onclick="window.location.href = 'add-user.html'"
+          style="max-width: 200px"
+        >
+          <i class="fas fa-user-plus"></i> Add New User
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Admin Panel - User Management</p>
+      <ul>
+        <li><a href="admin.html">Dashboard</a></li>
+        <li><a href="#" onclick="exportUsers()">Export Data</a></li>
+        <li>
+          <a href="#" onclick="alert('Bulk actions would go here')"
+            >Bulk Actions</a
+          >
+        </li>
+      </ul>
+      <p>© BIGGY FLIX - Admin Panel</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Override the functions to use the ones from script.js
+      // These are just wrappers to ensure compatibility
+
+      /**
+       * Load users into the table
+       */
+      function loadUsersTable() {
+        const tableBody = document.getElementById("users-table-body");
+        if (!tableBody) return;
+
+        // Get users from localStorage via the global function
+        const users =
+          typeof window.getAllUsers === "function"
+            ? window.getAllUsers()
+            : JSON.parse(localStorage.getItem("biggyflix_users") || "[]");
+
+        // Clear loading row
+        tableBody.innerHTML = "";
+
+        if (users.length === 0) {
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 40px;">
+                <i class="fas fa-users-slash"></i> No users found. Add some users!
+              </td>
+            </tr>
+          `;
+          document.getElementById("user-count").textContent = "0";
+          updateStats([]);
+          return;
+        }
+
+        // Add each user to the table
+        users.forEach((user) => {
+          const row = document.createElement("tr");
+          row.setAttribute("data-id", user.id);
+
+          // Determine role badge class
+          let roleClass = "user";
+          if (user.role === "admin") roleClass = "admin";
+          else if (user.role === "moderator") roleClass = "moderator";
+
+          // Status color
+          const statusColor = user.status === "active" ? "#00ff00" : "#ffaa00";
+          const statusText = user.status === "active" ? "Active" : "Suspended";
+
+          // Format date
+          const createdDate = user.createdAt
+            ? new Date(user.createdAt).toLocaleDateString()
+            : "N/A";
+
+          // Plan display
+          const planDisplay = user.plan
+            ? user.plan.charAt(0).toUpperCase() + user.plan.slice(1)
+            : "Basic";
+
+          // Check if this is the main admin (protected from deletion)
+          const isMainAdmin = user.email === "admin@biggyflix.com";
+
+          row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.fullname || "N/A"}</td>
+            <td>${user.email}</td>
+            <td><span class="role-badge ${roleClass}">${user.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "User"}</span></td>
+            <td><span style="color: ${statusColor};">${statusText}</span></td>
+            <td><span style="color: var(--neon-cyan);">${planDisplay}</span></td>
+            <td>${createdDate}</td>
+            <td class="action-icons">
+              <button class="edit-btn" onclick="editUser(${user.id})"><i class="fas fa-edit"></i> Edit</button>
+              ${
+                !isMainAdmin
+                  ? `<button class="delete-btn" onclick="deleteUser(${user.id})"><i class="fas fa-trash"></i> Delete</button>`
+                  : `<button class="edit-btn" disabled style="opacity: 0.5; cursor: not-allowed;" title="Cannot delete main admin"><i class="fas fa-shield"></i> Protected</button>`
+              }
+            </td>
+          `;
+
+          tableBody.appendChild(row);
+        });
+
+        // Update user count
+        document.getElementById("user-count").textContent = users.length;
+
+        // Update stats
+        updateStats(users);
+
+        console.log("Users table loaded with", users.length, "users");
+      }
+
+      /**
+       * Update statistics display
+       */
+      function updateStats(users) {
+        if (!users)
+          users =
+            typeof window.getAllUsers === "function"
+              ? window.getAllUsers()
+              : [];
+
+        const stats = {
+          active: users.filter((u) => u.status === "active").length,
+          suspended: users.filter((u) => u.status === "suspended").length,
+          admins: users.filter((u) => u.role === "admin").length,
+          moderators: users.filter((u) => u.role === "moderator").length,
+        };
+
+        document.getElementById("active-users").textContent = stats.active;
+        document.getElementById("suspended-users").textContent =
+          stats.suspended;
+        document.getElementById("admin-count").textContent = stats.admins;
+        document.getElementById("moderator-count").textContent =
+          stats.moderators;
+      }
+
+      /**
+       * Delete a user
+       */
+      function deleteUser(userId) {
+        // Check if user is admin using the global function
+        const isAdmin =
+          typeof window.isAdmin === "function" ? window.isAdmin() : false;
+
+        if (!isAdmin) {
+          alert("Admin access required");
+          return;
+        }
+
+        if (confirm(`Are you sure you want to delete user ID: ${userId}?`)) {
+          // Use the global adminDeleteUser function if available
+          let success = false;
+
+          if (typeof window.adminDeleteUser === "function") {
+            success = window.adminDeleteUser(userId);
+          } else {
+            // Fallback: manual deletion
+            const users = JSON.parse(
+              localStorage.getItem("biggyflix_users") || "[]",
+            );
+            const userIndex = users.findIndex((u) => u.id === userId);
+
+            if (
+              userIndex >= 0 &&
+              users[userIndex].email !== "admin@biggyflix.com"
+            ) {
+              users.splice(userIndex, 1);
+
+              // Reassign IDs
+              users.forEach((user, index) => {
+                user.id = index + 1;
+              });
+
+              localStorage.setItem("biggyflix_users", JSON.stringify(users));
+              success = true;
+            }
+          }
+
+          if (success) {
+            // Show success message
+            const successMsg = document.getElementById("success-message");
+            document.getElementById("success-text").textContent =
+              `User deleted successfully!`;
+            successMsg.style.display = "flex";
+
+            // Reload the table
+            loadUsersTable();
+
+            // Hide message after 3 seconds
+            setTimeout(() => {
+              successMsg.style.display = "none";
+            }, 3000);
+          } else {
+            alert("Could not delete user. They may be protected.");
+          }
+        }
+      }
+
+      /**
+       * Edit a user
+       */
+      function editUser(userId) {
+        // Check if user is admin
+        const isAdmin =
+          typeof window.isAdmin === "function" ? window.isAdmin() : false;
+
+        if (!isAdmin) {
+          alert("Admin access required");
+          return;
+        }
+
+        // Get user data
+        const users =
+          typeof window.getAllUsers === "function"
+            ? window.getAllUsers()
+            : JSON.parse(localStorage.getItem("biggyflix_users") || "[]");
+        const user = users.find((u) => u.id === userId);
+
+        if (!user) {
+          alert("User not found");
+          return;
+        }
+
+        // Simple edit menu
+        const action = prompt(
+          `Edit User: ${user.fullname}\n\n` +
+            `Current Role: ${user.role}\n` +
+            `Current Plan: ${user.plan || "basic"}\n` +
+            `Current Status: ${user.status}\n\n` +
+            `What would you like to change?\n` +
+            `1. Role (admin/moderator/user)\n` +
+            `2. Plan (basic/standard/premium)\n` +
+            `3. Status (active/suspended)\n` +
+            `4. Cancel\n\n` +
+            `Enter number (1-4):`,
+        );
+
+        if (action === "1") {
+          const newRole = prompt(
+            `Enter new role (admin/moderator/user):`,
+            user.role,
+          );
+          if (newRole && ["admin", "moderator", "user"].includes(newRole)) {
+            if (typeof window.adminUpdateUserRole === "function") {
+              if (window.adminUpdateUserRole(userId, newRole)) {
+                alert("Role updated successfully!");
+                loadUsersTable();
+              }
+            } else {
+              // Fallback
+              user.role = newRole;
+              localStorage.setItem("biggyflix_users", JSON.stringify(users));
+              alert("Role updated successfully!");
+              loadUsersTable();
+            }
+          }
+        } else if (action === "2") {
+          const newPlan = prompt(
+            `Enter new plan (basic/standard/premium):`,
+            user.plan || "basic",
+          );
+          if (newPlan && ["basic", "standard", "premium"].includes(newPlan)) {
+            user.plan = newPlan;
+            localStorage.setItem("biggyflix_users", JSON.stringify(users));
+            alert("Plan updated successfully!");
+            loadUsersTable();
+          }
+        } else if (action === "3") {
+          const newStatus = prompt(
+            `Enter new status (active/suspended):`,
+            user.status,
+          );
+          if (newStatus && ["active", "suspended"].includes(newStatus)) {
+            if (typeof window.adminUpdateUserStatus === "function") {
+              if (window.adminUpdateUserStatus(userId, newStatus)) {
+                alert("Status updated successfully!");
+                loadUsersTable();
+              }
+            } else {
+              // Fallback
+              user.status = newStatus;
+              localStorage.setItem("biggyflix_users", JSON.stringify(users));
+              alert("Status updated successfully!");
+              loadUsersTable();
+            }
+          }
+        }
+      }
+
+      /**
+       * Export users data
+       */
+      function exportUsers() {
+        const users =
+          typeof window.getAllUsers === "function"
+            ? window.getAllUsers()
+            : JSON.parse(localStorage.getItem("biggyflix_users") || "[]");
+
+        const dataStr = JSON.stringify(users, null, 2);
+        const dataUri =
+          "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+
+        const exportFileDefaultName = `biggyflix-users-${new Date().toISOString().slice(0, 10)}.json`;
+
+        const linkElement = document.createElement("a");
+        linkElement.setAttribute("href", dataUri);
+        linkElement.setAttribute("download", exportFileDefaultName);
+        linkElement.click();
+
+        alert(`Exported ${users.length} users to JSON file`);
+      }
+
+      // Load users when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check admin access
+        const loggedInUser = sessionStorage.getItem("loggedInUser");
+
+        if (!loggedInUser) {
+          console.log("No user logged in - redirecting to login");
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Parse user to check role
+        try {
+          const user = JSON.parse(loggedInUser);
+          if (user.role !== "admin") {
+            console.log("Non-admin user - redirecting to profile");
+            window.location.href = "profile.html";
+            return;
+          }
+        } catch (e) {
+          console.error("Error parsing user data");
+        }
+
+        // Load the users table
+        loadUsersTable();
+      });
+    </script>
+  </body>
+</html>
