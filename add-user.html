@@ -165,7 +165,6 @@
       // Add a new user using the global admin function
       function addUser(event) {
         event.preventDefault();
-        console.log("Add user function called");
 
         // Get form values
         const fullname = document.getElementById("fullname").value.trim();
@@ -173,8 +172,6 @@
         const password = document.getElementById("password").value;
         const role = document.getElementById("role").value;
         const plan = document.getElementById("plan").value;
-
-        console.log("Form values:", { fullname, email, role, plan });
 
         // Basic validation
         if (!fullname || !email || !password || !role || !plan) {
@@ -187,42 +184,39 @@
           return false;
         }
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        // Validate email format
+        function isValidEmail(email) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(email);
+        }
+
+        if (!isValidEmail(email)) {
           alert("Please enter a valid email address");
           return false;
         }
 
-        // Check if user is admin using the global function
-        if (typeof window.isAdmin === "function") {
-          const isAdmin = window.isAdmin();
-          console.log("Is admin:", isAdmin);
+        // Check if user is admin (using global isAdmin function if available)
+        const isAdmin =
+          typeof window.isAdmin === "function" ? window.isAdmin() : true;
 
-          if (!isAdmin) {
-            alert("Admin access required");
-            return false;
-          }
-        } else {
-          console.warn("isAdmin function not found, assuming admin");
+        if (!isAdmin) {
+          alert("Admin access required");
+          return false;
         }
 
-        // Prepare user data
-        const userData = {
-          fullname: fullname,
-          email: email,
-          password: password,
-          role: role,
-          plan: plan,
-        };
-
-        console.log("Attempting to add user with data:", userData);
-
-        // Use the global adminAddUser function
+        // Use the global adminAddUser function if available
         if (typeof window.adminAddUser === "function") {
-          console.log("adminAddUser function found, calling it...");
+          // Prepare user data
+          const userData = {
+            fullname: fullname,
+            email: email,
+            password: password,
+            role: role,
+            plan: plan,
+          };
+
+          // Add user using global function
           const success = window.adminAddUser(userData);
-          console.log("Result:", success);
 
           if (success) {
             // Show success message
@@ -259,28 +253,85 @@
             setTimeout(() => {
               successMsg.style.display = "none";
             }, 3000);
-          } else {
-            alert(
-              "Failed to add user. They may already exist or there was an error.",
-            );
           }
         } else {
-          console.error("adminAddUser function not found!");
-          alert(
-            "Error: Admin functions not available. Please refresh the page.",
+          // Fallback if global function doesn't exist
+          // Get existing users
+          const users = JSON.parse(
+            localStorage.getItem("biggyflix_users") || "[]",
           );
+
+          // Check if email already exists
+          const emailExists = users.some(
+            (u) => u.email.toLowerCase() === email.toLowerCase(),
+          );
+          if (emailExists) {
+            alert("Email already exists");
+            return false;
+          }
+
+          // Generate new ID
+          const nextId =
+            users.length > 0 ? Math.max(...users.map((u) => u.id || 0)) + 1 : 1;
+
+          // Create new user object
+          const newUser = {
+            id: nextId,
+            fullname: fullname,
+            email: email,
+            password: password,
+            role: role,
+            plan: plan,
+            status: "active",
+            createdAt: new Date().toISOString(),
+          };
+
+          // Add to array and save
+          users.push(newUser);
+          localStorage.setItem("biggyflix_users", JSON.stringify(users));
+
+          // Show success message
+          const successMsg = document.getElementById("success-message");
+          document.getElementById("success-text").textContent =
+            `User ${fullname} added successfully!`;
+          successMsg.style.display = "flex";
+
+          // Reset form
+          document.getElementById("add-user-form").reset();
+
+          // Add to preview table
+          const previewTable = document.getElementById("preview-table");
+          const newRow = document.createElement("tr");
+
+          let roleClass = "user";
+          if (role === "admin") roleClass = "admin";
+          else if (role === "moderator") roleClass = "moderator";
+
+          let planDisplay = "Basic";
+          if (plan === "standard") planDisplay = "Standard";
+          else if (plan === "premium") planDisplay = "Premium";
+
+          newRow.innerHTML = `
+            <td>${fullname}</td>
+            <td>${email}</td>
+            <td><span class="role-badge ${roleClass}">${role.charAt(0).toUpperCase() + role.slice(1)}</span></td>
+            <td>${planDisplay}</td>
+          `;
+
+          previewTable.prepend(newRow);
+
+          // Hide message after 3 seconds
+          setTimeout(() => {
+            successMsg.style.display = "none";
+          }, 3000);
         }
 
         return false;
       }
 
-      // Check admin access on page load
+      // Check admin access and load any existing data
       document.addEventListener("DOMContentLoaded", function () {
-        console.log("Add user page loaded");
-
-        // Check if user is logged in
         const loggedInUser = sessionStorage.getItem("loggedInUser");
-        console.log("Logged in user:", loggedInUser);
 
         if (!loggedInUser) {
           console.log("No user logged in - redirecting to login");
@@ -291,23 +342,14 @@
         // Parse user to check role
         try {
           const user = JSON.parse(loggedInUser);
-          console.log("User role:", user.role);
-
           if (user.role !== "admin") {
             console.log("Non-admin user - redirecting to profile");
             window.location.href = "profile.html";
             return;
           }
         } catch (e) {
-          console.error("Error parsing user data:", e);
+          console.error("Error parsing user data");
         }
-
-        // Log available global functions
-        console.log("Available functions:", {
-          getAllUsers: typeof window.getAllUsers,
-          isAdmin: typeof window.isAdmin,
-          adminAddUser: typeof window.adminAddUser,
-        });
       });
     </script>
   </body>

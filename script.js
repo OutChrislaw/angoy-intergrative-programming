@@ -599,15 +599,8 @@ function adminAddUser(userData) {
 
   // Get all users to determine next ID
   const users = getAllUsers();
-
-  // Find the maximum ID
-  let maxId = 0;
-  users.forEach((user) => {
-    if (user.id && user.id > maxId) {
-      maxId = user.id;
-    }
-  });
-  const nextId = maxId + 1;
+  const nextId =
+    users.length > 0 ? Math.max(...users.map((u) => u.id || 0)) + 1 : 1;
 
   // Create new user object
   const newUser = {
@@ -626,12 +619,6 @@ function adminAddUser(userData) {
   saveUsers(users);
 
   console.log("New user added by admin:", newUser.email);
-
-  // Dispatch a custom event so other pages can react
-  window.dispatchEvent(
-    new CustomEvent("usersUpdated", { detail: { users: users } }),
-  );
-
   return true;
 }
 
@@ -1040,21 +1027,3 @@ document.addEventListener("DOMContentLoaded", function () {
 console.log("BIGGY FLIX Authentication System Loaded");
 console.log("Registered Users:", getAllUsers());
 console.log("Current User:", getCurrentUser());
-
-// ============================================
-// EXPOSE FUNCTIONS GLOBALLY
-// ============================================
-
-// Make admin functions globally available to all pages
-window.getAllUsers = getAllUsers;
-window.isAdmin = isAdmin;
-window.adminAddUser = adminAddUser;
-window.adminDeleteUser = adminDeleteUser;
-window.adminUpdateUserRole = adminUpdateUserRole;
-window.adminUpdateUserStatus = adminUpdateUserStatus;
-window.adminGetUserStats = adminGetUserStats;
-window.getCurrentUser = getCurrentUser;
-window.logout = logout;
-window.emailExists = emailExists;
-window.isValidEmail = isValidEmail;
-window.isValidPassword = isValidPassword;
