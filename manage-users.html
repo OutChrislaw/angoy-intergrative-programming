@@ -482,6 +482,12 @@
         // Load the users table
         loadUsersTable();
       });
+
+      // Refresh the table when the page becomes visible (in case user was added in another tab)
+      window.addEventListener("focus", function () {
+        console.log("Page refocused - reloading users");
+        loadUsersTable();
+      });
     </script>
   </body>
 </html>
