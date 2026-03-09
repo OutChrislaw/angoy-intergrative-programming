@@ -162,13 +162,13 @@
     </footer>
 
     <script>
-      // Simulate adding a new user
+      // Add a new user using the global admin function
       function addUser(event) {
         event.preventDefault();
 
         // Get form values
-        const fullname = document.getElementById("fullname").value;
-        const email = document.getElementById("email").value;
+        const fullname = document.getElementById("fullname").value.trim();
+        const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const role = document.getElementById("role").value;
         const plan = document.getElementById("plan").value;
@@ -184,55 +184,171 @@
           return false;
         }
 
-        // Simulate adding to the "database"
-        console.log("New user added:", { fullname, email, role, plan });
+        // Validate email format
+        function isValidEmail(email) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(email);
+        }
 
-        // Show success message
-        const successMsg = document.getElementById("success-message");
-        document.getElementById("success-text").textContent =
-          `User ${fullname} added successfully!`;
-        successMsg.style.display = "flex";
+        if (!isValidEmail(email)) {
+          alert("Please enter a valid email address");
+          return false;
+        }
 
-        // Reset form
-        document.getElementById("add-user-form").reset();
+        // Check if user is admin (using global isAdmin function if available)
+        const isAdmin =
+          typeof window.isAdmin === "function" ? window.isAdmin() : true;
 
-        // Add to preview table (simulate)
-        const previewTable = document.getElementById("preview-table");
-        const newRow = document.createElement("tr");
+        if (!isAdmin) {
+          alert("Admin access required");
+          return false;
+        }
 
-        let roleClass = "user";
-        if (role === "admin") roleClass = "admin";
-        else if (role === "moderator") roleClass = "moderator";
+        // Use the global adminAddUser function if available
+        if (typeof window.adminAddUser === "function") {
+          // Prepare user data
+          const userData = {
+            fullname: fullname,
+            email: email,
+            password: password,
+            role: role,
+            plan: plan,
+          };
 
-        let planDisplay = "Basic";
-        if (plan === "standard") planDisplay = "Standard";
-        else if (plan === "premium") planDisplay = "Premium";
+          // Add user using global function
+          const success = window.adminAddUser(userData);
 
-        newRow.innerHTML = `
-                <td>${fullname}</td>
-                <td>${email}</td>
-                <td><span class="role-badge ${roleClass}">${role.charAt(0).toUpperCase() + role.slice(1)}</span></td>
-                <td>${planDisplay}</td>
+          if (success) {
+            // Show success message
+            const successMsg = document.getElementById("success-message");
+            document.getElementById("success-text").textContent =
+              `User ${fullname} added successfully!`;
+            successMsg.style.display = "flex";
+
+            // Reset form
+            document.getElementById("add-user-form").reset();
+
+            // Add to preview table
+            const previewTable = document.getElementById("preview-table");
+            const newRow = document.createElement("tr");
+
+            let roleClass = "user";
+            if (role === "admin") roleClass = "admin";
+            else if (role === "moderator") roleClass = "moderator";
+
+            let planDisplay = "Basic";
+            if (plan === "standard") planDisplay = "Standard";
+            else if (plan === "premium") planDisplay = "Premium";
+
+            newRow.innerHTML = `
+              <td>${fullname}</td>
+              <td>${email}</td>
+              <td><span class="role-badge ${roleClass}">${role.charAt(0).toUpperCase() + role.slice(1)}</span></td>
+              <td>${planDisplay}</td>
             `;
 
-        previewTable.prepend(newRow);
+            previewTable.prepend(newRow);
 
-        // Hide message after 3 seconds
-        setTimeout(() => {
-          successMsg.style.display = "none";
-        }, 3000);
+            // Hide message after 3 seconds
+            setTimeout(() => {
+              successMsg.style.display = "none";
+            }, 3000);
+          }
+        } else {
+          // Fallback if global function doesn't exist
+          // Get existing users
+          const users = JSON.parse(
+            localStorage.getItem("biggyflix_users") || "[]",
+          );
+
+          // Check if email already exists
+          const emailExists = users.some(
+            (u) => u.email.toLowerCase() === email.toLowerCase(),
+          );
+          if (emailExists) {
+            alert("Email already exists");
+            return false;
+          }
+
+          // Generate new ID
+          const nextId =
+            users.length > 0 ? Math.max(...users.map((u) => u.id || 0)) + 1 : 1;
+
+          // Create new user object
+          const newUser = {
+            id: nextId,
+            fullname: fullname,
+            email: email,
+            password: password,
+            role: role,
+            plan: plan,
+            status: "active",
+            createdAt: new Date().toISOString(),
+          };
+
+          // Add to array and save
+          users.push(newUser);
+          localStorage.setItem("biggyflix_users", JSON.stringify(users));
+
+          // Show success message
+          const successMsg = document.getElementById("success-message");
+          document.getElementById("success-text").textContent =
+            `User ${fullname} added successfully!`;
+          successMsg.style.display = "flex";
+
+          // Reset form
+          document.getElementById("add-user-form").reset();
+
+          // Add to preview table
+          const previewTable = document.getElementById("preview-table");
+          const newRow = document.createElement("tr");
+
+          let roleClass = "user";
+          if (role === "admin") roleClass = "admin";
+          else if (role === "moderator") roleClass = "moderator";
+
+          let planDisplay = "Basic";
+          if (plan === "standard") planDisplay = "Standard";
+          else if (plan === "premium") planDisplay = "Premium";
+
+          newRow.innerHTML = `
+            <td>${fullname}</td>
+            <td>${email}</td>
+            <td><span class="role-badge ${roleClass}">${role.charAt(0).toUpperCase() + role.slice(1)}</span></td>
+            <td>${planDisplay}</td>
+          `;
+
+          previewTable.prepend(newRow);
+
+          // Hide message after 3 seconds
+          setTimeout(() => {
+            successMsg.style.display = "none";
+          }, 3000);
+        }
 
         return false;
       }
 
-      // Check admin access
+      // Check admin access and load any existing data
       document.addEventListener("DOMContentLoaded", function () {
         const loggedInUser = sessionStorage.getItem("loggedInUser");
 
         if (!loggedInUser) {
-          // Uncomment for production
-          // window.location.href = 'login.html';
-          console.log("No user logged in - redirect would happen");
+          console.log("No user logged in - redirecting to login");
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Parse user to check role
+        try {
+          const user = JSON.parse(loggedInUser);
+          if (user.role !== "admin") {
+            console.log("Non-admin user - redirecting to profile");
+            window.location.href = "profile.html";
+            return;
+          }
+        } catch (e) {
+          console.error("Error parsing user data");
         }
       });
     </script>
