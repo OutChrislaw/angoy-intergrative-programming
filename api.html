@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country Explorer - BIGGY FLIX</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Additional styles specific to Country Explorer page */
+      .explorer-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 30px 60px;
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      .search-section {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 42, 94, 0.95) 0%,
+          rgba(10, 17, 40, 0.95) 100%
+        );
+        border: 2px solid var(--neon-cyan);
+        border-radius: 16px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        text-align: center;
+      }
+
+      .search-section h1 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--secondary-gold);
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+      }
+
+      .search-section p {
+        color: var(--neon-cyan);
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        font-family: "Space Mono", monospace;
+      }
+
+      .search-box {
+        display: flex;
+        gap: 15px;
+        max-width: 600px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .search-box input {
+        flex: 1;
+        min-width: 250px;
+        padding: 16px 20px;
+        background: rgba(10, 17, 40, 0.8);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 50px;
+        color: var(--text-light);
+        font-family: "Outfit", sans-serif;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .search-box input:focus {
+        outline: none;
+        box-shadow: 0 0 20px var(--neon-cyan);
+        border-color: var(--secondary-gold);
+      }
+
+      .search-box input::placeholder {
+        color: rgba(179, 179, 179, 0.6);
+        font-style: italic;
+      }
+
+      .search-box button {
+        padding: 16px 35px;
+        background: linear-gradient(
+          135deg,
+          var(--secondary-gold) 0%,
+          var(--neon-cyan) 100%
+        );
+        color: var(--primary-dark-blue);
+        border: none;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 700;
+        font-family: "Outfit", sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .search-box button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px var(--neon-cyan);
+      }
+
+      .search-box button i {
+        font-size: 1.1rem;
+      }
+
+      .loading-indicator {
+        text-align: center;
+        padding: 50px;
+        color: var(--neon-cyan);
+        font-size: 1.2rem;
+      }
+
+      .loading-indicator i {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error-message {
+        background: rgba(255, 0, 110, 0.1);
+        border: 2px solid var(--neon-pink);
+        border-radius: 12px;
+        padding: 30px;
+        text-align: center;
+        margin: 20px 0;
+        color: var(--neon-pink);
+      }
+
+      .error-message i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      .error-message h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        font-family: "Orbitron", sans-serif;
+      }
+
+      .error-message p {
+        font-size: 1rem;
+        color: var(--text-muted);
+      }
+
+      .country-card {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 42, 94, 0.95) 0%,
+          rgba(10, 17, 40, 0.95) 100%
+        );
+        border: 2px solid var(--neon-cyan);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        animation: fadeInUp 0.5s ease-out;
+      }
+
+      .country-header {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid rgba(0, 217, 255, 0.3);
+        flex-wrap: wrap;
+      }
+
+      .country-flag {
+        width: 120px;
+        height: 80px;
+        object-fit: cover;
+        border: 3px solid var(--neon-cyan);
+        border-radius: 12px;
+        box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+      }
+
+      .country-name {
+        flex: 1;
+      }
+
+      .country-name h2 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--secondary-gold);
+        margin-bottom: 5px;
+      }
+
+      .country-name p {
+        color: var(--neon-cyan);
+        font-size: 1.1rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .country-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+      }
+
+      .detail-card {
+        background: rgba(0, 217, 255, 0.1);
+        border: 2px solid rgba(0, 217, 255, 0.3);
+        border-radius: 12px;
+        padding: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .detail-card:hover {
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+        transform: translateY(-5px);
+      }
+
+      .detail-card i {
+        font-size: 2rem;
+        color: var(--neon-cyan);
+        margin-bottom: 15px;
+      }
+
+      .detail-card h3 {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.1rem;
+        color: var(--secondary-gold);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .detail-card p {
+        color: var(--text-light);
+        font-size: 1.3rem;
+        font-weight: 700;
+        font-family: "Outfit", sans-serif;
+      }
+
+      .detail-card small {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        display: block;
+        margin-top: 5px;
+      }
+
+      .languages-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .language-tag {
+        background: rgba(0, 217, 255, 0.2);
+        border: 1px solid var(--neon-cyan);
+        border-radius: 20px;
+        padding: 5px 15px;
+        color: var(--neon-cyan);
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .country-map {
+        margin-top: 30px;
+        text-align: center;
+        padding: 20px;
+        background: rgba(0, 217, 255, 0.05);
+        border-radius: 12px;
+      }
+
+      .country-map a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 30px;
+        background: transparent;
+        border: 2px solid var(--neon-cyan);
+        border-radius: 50px;
+        color: var(--neon-cyan);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .country-map a:hover {
+        background: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        box-shadow: 0 0 20px var(--neon-cyan);
+      }
+
+      .recent-searches {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .recent-tag {
+        padding: 8px 16px;
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: 30px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .recent-tag:hover {
+        background: rgba(0, 217, 255, 0.2);
+        border-color: var(--neon-cyan);
+        color: var(--neon-cyan);
+        transform: scale(1.05);
+      }
+
+      .example-tags {
+        margin-top: 15px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .example-tags span {
+        color: var(--neon-cyan);
+        cursor: pointer;
+        text-decoration: underline;
+        margin: 0 3px;
+      }
+
+      .example-tags span:hover {
+        color: var(--secondary-gold);
+      }
+
+      @media (max-width: 768px) {
+        .search-section {
+          padding: 25px;
+        }
+
+        .search-section h1 {
+          font-size: 1.8rem;
+        }
+
+        .country-header {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .country-name h2 {
+          font-size: 1.8rem;
+        }
+
+        .country-details {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>
+        <a href="index.html" style="text-decoration: none; color: inherit"
+          >BIGGY FLIX</a
+        >
+      </h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="profile.html">Profile</a>
+        <a href="login.html">Logout</a>
+      </nav>
+    </header>
+
+    <div class="explorer-container">
+      <!-- Back Button -->
+      <a href="javascript:history.back()" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Go Back
+      </a>
+
+      <!-- Search Section -->
+      <div class="search-section">
+        <h1><i class="fas fa-globe-americas"></i> Country Explorer</h1>
+        <p>Discover detailed information about any country in the world</p>
+
+        <div class="search-box">
+          <input
+            type="text"
+            id="country-search"
+            placeholder="Enter a country name (e.g., Philippines, Japan, Brazil)"
+            value="Philippines"
+          />
+          <button onclick="searchCountry()">
+            <i class="fas fa-search"></i> Explore
+          </button>
+        </div>
+
+        <div class="example-tags">
+          Try:
+          <span onclick="quickSearch('Philippines')">Philippines</span> •
+          <span onclick="quickSearch('Japan')">Japan</span> •
+          <span onclick="quickSearch('France')">France</span> •
+          <span onclick="quickSearch('Brazil')">Brazil</span> •
+          <span onclick="quickSearch('Australia')">Australia</span>
+        </div>
+
+        <!-- Recent Searches Container -->
+        <div id="recent-searches" class="recent-searches"></div>
+      </div>
+
+      <!-- Loading Indicator (hidden by default) -->
+      <div id="loading" class="loading-indicator" style="display: none">
+        <i class="fas fa-spinner"></i>
+        <p>Fetching country data...</p>
+      </div>
+
+      <!-- Error Message (hidden by default) -->
+      <div id="error" class="error-message" style="display: none">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Oops! Something went wrong</h3>
+        <p id="error-text">Error message will appear here</p>
+      </div>
+
+      <!-- Results Container (initially empty) -->
+      <div id="results-container"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Explore countries around the world with real-time data</p>
+      <ul>
+        <li>
+          <a href="#" onclick="alert('Data provided by REST Countries API')"
+            >About this data</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="quickSearch('Philippines')">Philippines</a>
+        </li>
+        <li><a href="#" onclick="quickSearch('Japan')">Japan</a></li>
+        <li><a href="#" onclick="quickSearch('USA')">USA</a></li>
+      </ul>
+      <p>© BIGGY FLIX - Country Explorer</p>
+    </footer>
+
+    <script>
+      // ============================================
+      // COUNTRY EXPLORER - REST Countries API Integration
+      // ============================================
+
+      // API Endpoint (public, no key required)
+      const API_BASE_URL = "https://restcountries.com/v3.1";
+
+      // Initialize recent searches from localStorage
+      let recentSearches = JSON.parse(
+        localStorage.getItem("recentCountrySearches") || "[]",
+      );
+
+      /**
+       * Display recent searches
+       */
+      function displayRecentSearches() {
+        const container = document.getElementById("recent-searches");
+        if (!container) return;
+
+        if (recentSearches.length === 0) {
+          container.style.display = "none";
+          return;
+        }
+
+        container.style.display = "flex";
+        container.innerHTML =
+          '<span style="color: var(--text-muted);">Recent:</span>';
+
+        // Show last 5 searches
+        recentSearches.slice(0, 5).forEach((country) => {
+          const tag = document.createElement("span");
+          tag.className = "recent-tag";
+          tag.innerHTML = `<i class="fas fa-history"></i> ${country}`;
+          tag.onclick = () => quickSearch(country);
+          container.appendChild(tag);
+        });
+      }
+
+      /**
+       * Add country to recent searches
+       */
+      function addToRecentSearches(country) {
+        // Remove if already exists
+        recentSearches = recentSearches.filter(
+          (c) => c.toLowerCase() !== country.toLowerCase(),
+        );
+
+        // Add to beginning
+        recentSearches.unshift(country);
+
+        // Keep only last 10
+        if (recentSearches.length > 10) {
+          recentSearches = recentSearches.slice(0, 10);
+        }
+
+        // Save to localStorage
+        localStorage.setItem(
+          "recentCountrySearches",
+          JSON.stringify(recentSearches),
+        );
+
+        // Update display
+        displayRecentSearches();
+      }
+
+      /**
+       * Quick search function for example tags
+       */
+      function quickSearch(country) {
+        document.getElementById("country-search").value = country;
+        searchCountry();
+      }
+
+      /**
+       * Show loading state
+       */
+      function showLoading() {
+        document.getElementById("loading").style.display = "block";
+        document.getElementById("error").style.display = "none";
+        document.getElementById("results-container").innerHTML = "";
+      }
+
+      /**
+       * Hide loading state
+       */
+      function hideLoading() {
+        document.getElementById("loading").style.display = "none";
+      }
+
+      /**
+       * Show error message
+       */
+      function showError(message) {
+        hideLoading();
+        document.getElementById("error").style.display = "block";
+        document.getElementById("error-text").textContent = message;
+        document.getElementById("results-container").innerHTML = "";
+      }
+
+      /**
+       * Format population number with commas
+       */
+      function formatPopulation(population) {
+        return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      /**
+       * Get currency information
+       */
+      function getCurrencyInfo(currency) {
+        if (!currency) return "N/A";
+        const currencyCode = Object.keys(currency)[0];
+        const currencyData = currency[currencyCode];
+        return currencyData ? `${currencyData.name} (${currencyCode})` : "N/A";
+      }
+
+      /**
+       * Get language names
+       */
+      function getLanguages(languages) {
+        if (!languages) return ["N/A"];
+        return Object.values(languages);
+      }
+
+      /**
+       * Create and display country card
+       */
+      function displayCountryData(country) {
+        const container = document.getElementById("results-container");
+
+        // Format languages
+        const languages = getLanguages(country.languages);
+        const languagesHtml = languages
+          .map((lang) => `<span class="language-tag">${lang}</span>`)
+          .join("");
+
+        // Get currencies
+        const currencies = country.currencies
+          ? getCurrencyInfo(country.currencies)
+          : "N/A";
+
+        // Get capital (handle multiple capitals)
+        const capital = country.capital
+          ? country.capital.join(", ")
+          : "No capital";
+
+        // Get borders
+        const borders = country.borders
+          ? country.borders.join(", ")
+          : "No bordering countries";
+
+        // Get continent
+        const continent = country.continents
+          ? country.continents.join(", ")
+          : "N/A";
+
+        // Create country card HTML
+        const html = `
+          <div class="country-card">
+            <div class="country-header">
+              <img src="${country.flags.svg || country.flags.png}" alt="Flag of ${country.name.common}" class="country-flag">
+              <div class="country-name">
+                <h2>${country.name.common}</h2>
+                <p>${country.name.official}</p>
+              </div>
+            </div>
+
+            <div class="country-details">
+              <div class="detail-card">
+                <i class="fas fa-city"></i>
+                <h3>Capital</h3>
+                <p>${capital}</p>
+              </div>
+
+              <div class="detail-card">
+                <i class="fas fa-users"></i>
+                <h3>Population</h3>
+                <p>${formatPopulation(country.population)}</p>
+                <small>people</small>
+              </div>
+
+              <div class="detail-card">
+                <i class="fas fa-globe"></i>
+                <h3>Region</h3>
+                <p>${country.region}</p>
+                <small>${country.subregion || ""}</small>
+              </div>
+
+              <div class="detail-card">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3>Currency</h3>
+                <p>${currencies}</p>
+              </div>
+
+              <div class="detail-card">
+                <i class="fas fa-language"></i>
+                <h3>Languages</h3>
+                <div class="languages-list">
+                  ${languagesHtml}
+                </div>
+              </div>
+
+              <div class="detail-card">
+                <i class="fas fa-clock"></i>
+                <h3>Time Zone</h3>
+                <p>${country.timezones[0]}</p>
+                <small>${country.timezones.length} time zone(s)</small>
+              </div>
+            </div>
+
+            <div class="country-map">
+              <a href="https://www.google.com/maps/search/?api=1&query=${country.name.common}" target="_blank">
+                <i class="fas fa-map-marked-alt"></i> View on Google Maps
+              </a>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+              <i class="fas fa-info-circle"></i> Data provided by REST Countries API
+            </div>
+          </div>
+        `;
+
+        container.innerHTML = html;
+      }
+
+      /**
+       * Main search function
+       */
+      async function searchCountry() {
+        const searchInput = document.getElementById("country-search");
+        const countryName = searchInput.value.trim();
+
+        // Validate input
+        if (!countryName) {
+          showError("Please enter a country name to search.");
+          return;
+        }
+
+        // Show loading state
+        showLoading();
+
+        try {
+          // Make API request
+          const response = await fetch(
+            `${API_BASE_URL}/name/${encodeURIComponent(countryName)}?fullText=false`,
+          );
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error(
+                `No country found with the name "${countryName}". Please check the spelling and try again.`,
+              );
+            } else {
+              throw new Error(
+                `API request failed with status: ${response.status}`,
+              );
+            }
+          }
+
+          const data = await response.json();
+
+          if (!data || data.length === 0) {
+            throw new Error(`No country found with the name "${countryName}".`);
+          }
+
+          // Get the first result (most relevant)
+          const country = data[0];
+
+          // Hide loading, clear error, display data
+          hideLoading();
+          document.getElementById("error").style.display = "none";
+          displayCountryData(country);
+
+          // Add to recent searches
+          addToRecentSearches(country.name.common);
+        } catch (error) {
+          console.error("Error fetching country data:", error);
+          showError(
+            error.message || "An unexpected error occurred. Please try again.",
+          );
+        }
+      }
+
+      /**
+       * Search on Enter key press
+       */
+      document
+        .getElementById("country-search")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            searchCountry();
+          }
+        });
+
+      /**
+       * Clear error when user starts typing
+       */
+      document
+        .getElementById("country-search")
+        .addEventListener("input", function () {
+          document.getElementById("error").style.display = "none";
+        });
+
+      /**
+       * Load initial country on page load (Philippines)
+       */
+      document.addEventListener("DOMContentLoaded", function () {
+        displayRecentSearches();
+
+        // Check if user is logged in (optional - can be removed if you want public access)
+        const loggedInUser = sessionStorage.getItem("loggedInUser");
+        if (!loggedInUser) {
+          console.log("No user logged in - but country explorer is public");
+          // Uncomment the next line if you want to require login
+          // window.location.href = 'login.html';
+        }
+
+        // Load initial country (Philippines)
+        setTimeout(() => {
+          searchCountry();
+        }, 500);
+      });
+    </script>
+  </body>
+</html>
