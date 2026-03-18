@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Country Explorer - BIGGY FLIX</title>
+    <title>TV & Movie Explorer - BIGGY FLIX</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
     <link rel="stylesheet" href="styles.css" />
     <style>
-      /* Additional styles specific to Country Explorer page */
+      /* Additional styles specific to TV & Movie Explorer page */
       .explorer-container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 40px auto;
         padding: 0 30px 60px;
         animation: fadeInUp 0.6s ease-out;
@@ -53,7 +53,7 @@
       .search-box {
         display: flex;
         gap: 15px;
-        max-width: 600px;
+        max-width: 700px;
         margin: 0 auto;
         flex-wrap: wrap;
         justify-content: center;
@@ -61,7 +61,7 @@
 
       .search-box input {
         flex: 1;
-        min-width: 250px;
+        min-width: 300px;
         padding: 16px 20px;
         background: rgba(10, 17, 40, 0.8);
         border: 2px solid var(--neon-cyan);
@@ -114,6 +114,47 @@
         font-size: 1.1rem;
       }
 
+      .filter-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .filter-tab {
+        padding: 12px 25px;
+        background: rgba(0, 217, 255, 0.1);
+        border: 2px solid transparent;
+        border-radius: 40px;
+        color: var(--text-muted);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .filter-tab:hover {
+        background: rgba(0, 217, 255, 0.2);
+        color: var(--neon-cyan);
+        transform: translateY(-2px);
+      }
+
+      .filter-tab.active {
+        background: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        border-color: var(--secondary-gold);
+        box-shadow: 0 0 20px var(--neon-cyan);
+      }
+
+      .filter-tab i {
+        font-size: 1rem;
+      }
+
       .loading-indicator {
         text-align: center;
         padding: 50px;
@@ -162,7 +203,191 @@
         color: var(--text-muted);
       }
 
-      .country-card {
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .show-card {
+        background: linear-gradient(
+          135deg,
+          rgba(26, 42, 94, 0.9) 0%,
+          rgba(10, 17, 40, 0.95) 100%
+        );
+        border: 2px solid rgba(0, 217, 255, 0.3);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .show-card:hover {
+        border-color: var(--neon-cyan);
+        box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        transform: translateY(-10px);
+      }
+
+      .show-image {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a2a5e, #0a1128);
+      }
+
+      .show-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .show-card:hover .show-image img {
+        transform: scale(1.05);
+      }
+
+      .no-image {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--neon-cyan);
+        font-size: 3rem;
+        background: linear-gradient(135deg, #1a2a5e, #0a1128);
+      }
+
+      .show-rating {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid var(--secondary-gold);
+        border-radius: 30px;
+        padding: 5px 12px;
+        color: var(--secondary-gold);
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        backdrop-filter: blur(5px);
+      }
+
+      .show-rating i {
+        color: var(--secondary-gold);
+        font-size: 0.8rem;
+      }
+
+      .show-info {
+        padding: 20px;
+      }
+
+      .show-title {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--secondary-gold);
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
+      .show-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 0.85rem;
+      }
+
+      .show-year {
+        color: var(--neon-cyan);
+        font-family: "Space Mono", monospace;
+        background: rgba(0, 217, 255, 0.15);
+        padding: 4px 10px;
+        border-radius: 20px;
+      }
+
+      .show-type {
+        color: var(--text-muted);
+        font-family: "Space Mono", monospace;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+      }
+
+      .show-genres {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 15px;
+      }
+
+      .genre-tag {
+        background: rgba(0, 217, 255, 0.15);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: 20px;
+        padding: 4px 10px;
+        color: var(--neon-cyan);
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .show-summary {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .show-summary p {
+        margin: 0;
+      }
+
+      .show-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(0, 217, 255, 0.2);
+      }
+
+      .save-show-btn {
+        padding: 8px 16px;
+        background: rgba(0, 217, 255, 0.15);
+        border: 1px solid var(--neon-cyan);
+        border-radius: 6px;
+        color: var(--neon-cyan);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .save-show-btn:hover {
+        background: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        box-shadow: 0 0 15px var(--neon-cyan);
+      }
+
+      .save-show-btn.saved {
+        background: rgba(0, 255, 0, 0.2);
+        border-color: #00ff00;
+        color: #00ff00;
+      }
+
+      .show-detail-view {
         background: linear-gradient(
           135deg,
           rgba(26, 42, 94, 0.95) 0%,
@@ -171,140 +396,259 @@
         border: 2px solid var(--neon-cyan);
         border-radius: 20px;
         padding: 40px;
+        margin-top: 30px;
         box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
         animation: fadeInUp 0.5s ease-out;
       }
 
-      .country-header {
+      .show-detail-header {
         display: flex;
-        align-items: center;
-        gap: 30px;
+        gap: 40px;
         margin-bottom: 30px;
-        padding-bottom: 30px;
-        border-bottom: 2px solid rgba(0, 217, 255, 0.3);
         flex-wrap: wrap;
       }
 
-      .country-flag {
-        width: 120px;
-        height: 80px;
+      /* Fix for detail image */
+      .detail-image {
+        width: 300px;
+        height: 450px;
         object-fit: cover;
+        border-radius: 16px;
         border: 3px solid var(--neon-cyan);
-        border-radius: 12px;
         box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        background: linear-gradient(135deg, #1a2a5e, #0a1128);
       }
 
-      .country-name {
+      /* Fix for no-image fallback */
+      .no-image {
+        width: 300px;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1a2a5e, #0a1128);
+        border: 3px solid var(--neon-cyan);
+        border-radius: 16px;
+        color: var(--neon-cyan);
+      }
+
+      .no-image i {
+        font-size: 4rem;
+        opacity: 0.8;
+      }
+
+      .detail-info {
         flex: 1;
       }
 
-      .country-name h2 {
+      .detail-info h2 {
         font-family: "Orbitron", sans-serif;
         font-size: 2.5rem;
         font-weight: 900;
         color: var(--secondary-gold);
-        margin-bottom: 5px;
+        margin-bottom: 10px;
       }
 
-      .country-name p {
+      .detail-meta {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+      }
+
+      .detail-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(0, 217, 255, 0.1);
+        border-radius: 30px;
+        color: var(--text-light);
+      }
+
+      .detail-meta-item i {
+        color: var(--secondary-gold);
+      }
+
+      .detail-genres {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 25px;
+      }
+
+      .detail-genre {
+        background: rgba(0, 217, 255, 0.2);
+        border: 1px solid var(--neon-cyan);
+        border-radius: 30px;
+        padding: 8px 20px;
         color: var(--neon-cyan);
-        font-size: 1.1rem;
-        font-family: "Space Mono", monospace;
+        font-weight: 600;
       }
 
-      .country-details {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 25px;
+      .detail-summary {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        line-height: 1.7;
         margin-bottom: 30px;
       }
 
-      .detail-card {
+      .detail-summary p {
+        margin: 0;
+      }
+
+      .detail-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .detail-stat {
+        text-align: center;
+        padding: 20px;
         background: rgba(0, 217, 255, 0.1);
-        border: 2px solid rgba(0, 217, 255, 0.3);
         border-radius: 12px;
-        padding: 25px;
-        transition: all 0.3s ease;
       }
 
-      .detail-card:hover {
-        border-color: var(--neon-cyan);
-        box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
-        transform: translateY(-5px);
-      }
-
-      .detail-card i {
-        font-size: 2rem;
-        color: var(--neon-cyan);
-        margin-bottom: 15px;
-      }
-
-      .detail-card h3 {
-        font-family: "Orbitron", sans-serif;
-        font-size: 1.1rem;
-        color: var(--secondary-gold);
+      .detail-stat-label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
         margin-bottom: 10px;
         text-transform: uppercase;
         letter-spacing: 1px;
       }
 
-      .detail-card p {
-        color: var(--text-light);
-        font-size: 1.3rem;
+      .detail-stat-value {
+        color: var(--secondary-gold);
+        font-size: 1.5rem;
         font-weight: 700;
-        font-family: "Outfit", sans-serif;
+        font-family: "Orbitron", sans-serif;
       }
 
-      .detail-card small {
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        display: block;
-        margin-top: 5px;
-      }
-
-      .languages-list {
+      .cast-list {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 10px;
+        gap: 20px;
+        margin-top: 20px;
       }
 
-      .language-tag {
-        background: rgba(0, 217, 255, 0.2);
-        border: 1px solid var(--neon-cyan);
-        border-radius: 20px;
-        padding: 5px 15px;
-        color: var(--neon-cyan);
+      .cast-item {
+        text-align: center;
+        min-width: 100px;
+      }
+
+      .cast-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--neon-cyan),
+          var(--neon-purple)
+        );
+        margin: 0 auto 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+      }
+
+      .cast-name {
+        color: var(--text-light);
         font-size: 0.9rem;
         font-weight: 600;
       }
 
-      .country-map {
-        margin-top: 30px;
-        text-align: center;
+      .cast-character {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+
+      .episodes-section {
+        margin-top: 40px;
+      }
+
+      .episodes-section h3 {
+        color: var(--secondary-gold);
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .episode-item {
+        display: flex;
+        gap: 20px;
         padding: 20px;
         background: rgba(0, 217, 255, 0.05);
         border-radius: 12px;
-      }
-
-      .country-map a {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 15px 30px;
-        background: transparent;
-        border: 2px solid var(--neon-cyan);
-        border-radius: 50px;
-        color: var(--neon-cyan);
-        text-decoration: none;
-        font-weight: 600;
+        margin-bottom: 15px;
         transition: all 0.3s ease;
       }
 
-      .country-map a:hover {
-        background: var(--neon-cyan);
-        color: var(--primary-dark-blue);
-        box-shadow: 0 0 20px var(--neon-cyan);
+      .episode-item:hover {
+        background: rgba(0, 217, 255, 0.1);
+      }
+
+      .episode-number {
+        font-family: "Orbitron", sans-serif;
+        font-size: 1.2rem;
+        color: var(--neon-cyan);
+        min-width: 60px;
+      }
+
+      .episode-info {
+        flex: 1;
+      }
+
+      .episode-info h4 {
+        color: var(--secondary-gold);
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+
+      .episode-info p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .episode-date {
+        color: var(--neon-cyan);
+        font-size: 0.8rem;
+        font-family: "Space Mono", monospace;
+      }
+
+      .back-to-grid {
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+
+      .success-notification {
+        position: fixed;
+        top: 100px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #00ff00;
+        border-radius: 10px;
+        padding: 15px 25px;
+        color: #00ff00;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        z-index: 1000;
+        animation: slideInRight 0.3s ease-out;
+        backdrop-filter: blur(10px);
+      }
+
+      .success-notification.warning {
+        border-color: #ffaa00;
+        color: #ffaa00;
+      }
+
+      .success-notification.info {
+        border-color: var(--neon-cyan);
+        color: var(--neon-cyan);
       }
 
       .recent-searches {
@@ -359,17 +703,45 @@
           font-size: 1.8rem;
         }
 
-        .country-header {
+        .show-detail-header {
           flex-direction: column;
+          align-items: center;
           text-align: center;
         }
 
-        .country-name h2 {
+        .detail-image {
+          width: 200px;
+          height: 300px;
+        }
+
+        .no-image {
+          width: 200px;
+          height: 300px;
+        }
+
+        .detail-info h2 {
           font-size: 1.8rem;
         }
 
-        .country-details {
-          grid-template-columns: 1fr;
+        .filter-tabs {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .filter-tab {
+          justify-content: center;
+        }
+
+        .success-notification {
+          left: 20px;
+          right: 20px;
+          top: auto;
+          bottom: 20px;
+        }
+
+        .episode-item {
+          flex-direction: column;
+          gap: 10px;
         }
       }
     </style>
@@ -385,6 +757,7 @@
       <nav>
         <a href="index.html">Home</a>
         <a href="profile.html">Profile</a>
+        <a href="saved-shows.html"><i class="fas fa-bookmark"></i> Saved</a>
         <a href="login.html">Logout</a>
       </nav>
     </header>
@@ -397,28 +770,31 @@
 
       <!-- Search Section -->
       <div class="search-section">
-        <h1><i class="fas fa-globe-americas"></i> Country Explorer</h1>
-        <p>Discover detailed information about any country in the world</p>
+        <h1><i class="fas fa-tv"></i> TV & Movie Explorer</h1>
+        <p>
+          Discover detailed information about your favorite TV shows and series
+        </p>
 
         <div class="search-box">
           <input
             type="text"
-            id="country-search"
-            placeholder="Enter a country name (e.g., Philippines, Japan, Brazil)"
-            value="Philippines"
+            id="show-search"
+            placeholder="Search for a TV show (e.g., Breaking Bad, Game of Thrones)"
+            value="Breaking Bad"
           />
-          <button onclick="searchCountry()">
-            <i class="fas fa-search"></i> Explore
+          <button onclick="searchShows()">
+            <i class="fas fa-search"></i> Search
           </button>
         </div>
 
         <div class="example-tags">
           Try:
-          <span onclick="quickSearch('Philippines')">Philippines</span> •
-          <span onclick="quickSearch('Japan')">Japan</span> •
-          <span onclick="quickSearch('France')">France</span> •
-          <span onclick="quickSearch('Brazil')">Brazil</span> •
-          <span onclick="quickSearch('Australia')">Australia</span>
+          <span onclick="quickSearch('Breaking Bad')">Breaking Bad</span> •
+          <span onclick="quickSearch('Game of Thrones')">Game of Thrones</span>
+          •
+          <span onclick="quickSearch('Stranger Things')">Stranger Things</span>
+          • <span onclick="quickSearch('The Office')">The Office</span> •
+          <span onclick="quickSearch('Friends')">Friends</span>
         </div>
 
         <!-- Recent Searches Container -->
@@ -428,7 +804,7 @@
       <!-- Loading Indicator (hidden by default) -->
       <div id="loading" class="loading-indicator" style="display: none">
         <i class="fas fa-spinner"></i>
-        <p>Fetching country data...</p>
+        <p>Fetching show data...</p>
       </div>
 
       <!-- Error Message (hidden by default) -->
@@ -438,39 +814,65 @@
         <p id="error-text">Error message will appear here</p>
       </div>
 
-      <!-- Results Container (initially empty) -->
-      <div id="results-container"></div>
+      <!-- Results Container (Shows Grid) -->
+      <div id="results-container">
+        <div class="results-grid" id="shows-grid"></div>
+      </div>
+
+      <!-- Show Detail View (hidden by default) -->
+      <div
+        id="show-detail"
+        class="show-detail-view"
+        style="display: none"
+      ></div>
     </div>
 
     <!-- Footer -->
     <footer>
-      <p>Explore countries around the world with real-time data</p>
+      <p>
+        Explore TV shows with real-time data from TVmaze API (No API key
+        required!)
+      </p>
       <ul>
         <li>
-          <a href="#" onclick="alert('Data provided by REST Countries API')"
-            >About this data</a
+          <a
+            href="#"
+            onclick="alert('Data provided by TVmaze API - Free and open')"
+            >About TVmaze</a
           >
         </li>
         <li>
-          <a href="#" onclick="quickSearch('Philippines')">Philippines</a>
+          <a href="#" onclick="quickSearch('Breaking Bad')">Breaking Bad</a>
         </li>
-        <li><a href="#" onclick="quickSearch('Japan')">Japan</a></li>
-        <li><a href="#" onclick="quickSearch('USA')">USA</a></li>
+        <li>
+          <a href="#" onclick="quickSearch('Game of Thrones')"
+            >Game of Thrones</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="quickSearch('Stranger Things')"
+            >Stranger Things</a
+          >
+        </li>
+        <li><a href="saved-shows.html">My Watchlist</a></li>
       </ul>
-      <p>© BIGGY FLIX - Country Explorer</p>
+      <p>© BIGGY FLIX - TV & Movie Explorer</p>
     </footer>
 
     <script>
       // ============================================
-      // COUNTRY EXPLORER - REST Countries API Integration
+      // TV & MOVIE EXPLORER - TVmaze API (No API Key Required!)
       // ============================================
 
-      // API Endpoint (public, no key required)
-      const API_BASE_URL = "https://restcountries.com/v3.1";
+      // TVmaze API is completely free - no API key needed!
+      const API_BASE_URL = "https://api.tvmaze.com";
+
+      // Current show data for detail view
+      let currentShowData = null;
 
       // Initialize recent searches from localStorage
       let recentSearches = JSON.parse(
-        localStorage.getItem("recentCountrySearches") || "[]",
+        localStorage.getItem("recentShowSearches") || "[]",
       );
 
       /**
@@ -490,26 +892,26 @@
           '<span style="color: var(--text-muted);">Recent:</span>';
 
         // Show last 5 searches
-        recentSearches.slice(0, 5).forEach((country) => {
+        recentSearches.slice(0, 5).forEach((search) => {
           const tag = document.createElement("span");
           tag.className = "recent-tag";
-          tag.innerHTML = `<i class="fas fa-history"></i> ${country}`;
-          tag.onclick = () => quickSearch(country);
+          tag.innerHTML = `<i class="fas fa-history"></i> ${search}`;
+          tag.onclick = () => quickSearch(search);
           container.appendChild(tag);
         });
       }
 
       /**
-       * Add country to recent searches
+       * Add search to recent searches
        */
-      function addToRecentSearches(country) {
+      function addToRecentSearches(searchTerm) {
         // Remove if already exists
         recentSearches = recentSearches.filter(
-          (c) => c.toLowerCase() !== country.toLowerCase(),
+          (s) => s.toLowerCase() !== searchTerm.toLowerCase(),
         );
 
         // Add to beginning
-        recentSearches.unshift(country);
+        recentSearches.unshift(searchTerm);
 
         // Keep only last 10
         if (recentSearches.length > 10) {
@@ -518,7 +920,7 @@
 
         // Save to localStorage
         localStorage.setItem(
-          "recentCountrySearches",
+          "recentShowSearches",
           JSON.stringify(recentSearches),
         );
 
@@ -529,9 +931,9 @@
       /**
        * Quick search function for example tags
        */
-      function quickSearch(country) {
-        document.getElementById("country-search").value = country;
-        searchCountry();
+      function quickSearch(searchTerm) {
+        document.getElementById("show-search").value = searchTerm;
+        searchShows();
       }
 
       /**
@@ -540,7 +942,8 @@
       function showLoading() {
         document.getElementById("loading").style.display = "block";
         document.getElementById("error").style.display = "none";
-        document.getElementById("results-container").innerHTML = "";
+        document.getElementById("shows-grid").innerHTML = "";
+        document.getElementById("show-detail").style.display = "none";
       }
 
       /**
@@ -557,145 +960,523 @@
         hideLoading();
         document.getElementById("error").style.display = "block";
         document.getElementById("error-text").textContent = message;
-        document.getElementById("results-container").innerHTML = "";
+        document.getElementById("shows-grid").innerHTML = "";
+        document.getElementById("show-detail").style.display = "none";
       }
 
       /**
-       * Format population number with commas
+       * Strip HTML tags from summary
        */
-      function formatPopulation(population) {
-        return population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      function stripHtml(html) {
+        if (!html) return "No summary available.";
+        const tmp = document.createElement("div");
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || "No summary available.";
       }
 
       /**
-       * Get currency information
+       * Check if show is saved
        */
-      function getCurrencyInfo(currency) {
-        if (!currency) return "N/A";
-        const currencyCode = Object.keys(currency)[0];
-        const currencyData = currency[currencyCode];
-        return currencyData ? `${currencyData.name} (${currencyCode})` : "N/A";
+      function isShowSaved(showId) {
+        const saved = JSON.parse(
+          localStorage.getItem("biggyflix_saved_shows") || "[]",
+        );
+        return saved.some((s) => s.id === showId);
       }
 
       /**
-       * Get language names
+       * Display shows in grid
        */
-      function getLanguages(languages) {
-        if (!languages) return ["N/A"];
-        return Object.values(languages);
-      }
+      function displayShows(shows) {
+        const grid = document.getElementById("shows-grid");
 
-      /**
-       * Create and display country card
-       */
-      function displayCountryData(country) {
-        const container = document.getElementById("results-container");
-
-        // Format languages
-        const languages = getLanguages(country.languages);
-        const languagesHtml = languages
-          .map((lang) => `<span class="language-tag">${lang}</span>`)
-          .join("");
-
-        // Get currencies
-        const currencies = country.currencies
-          ? getCurrencyInfo(country.currencies)
-          : "N/A";
-
-        // Get capital (handle multiple capitals)
-        const capital = country.capital
-          ? country.capital.join(", ")
-          : "No capital";
-
-        // Get borders
-        const borders = country.borders
-          ? country.borders.join(", ")
-          : "No bordering countries";
-
-        // Get continent
-        const continent = country.continents
-          ? country.continents.join(", ")
-          : "N/A";
-
-        // Create country card HTML
-        const html = `
-          <div class="country-card">
-            <div class="country-header">
-              <img src="${country.flags.svg || country.flags.png}" alt="Flag of ${country.name.common}" class="country-flag">
-              <div class="country-name">
-                <h2>${country.name.common}</h2>
-                <p>${country.name.official}</p>
-              </div>
+        if (!shows || shows.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-muted);">
+              <i class="fas fa-tv" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+              <h3 style="color: var(--secondary-gold); margin-bottom: 10px;">No Results Found</h3>
+              <p>Try searching for something else or check your spelling.</p>
             </div>
+          `;
+          return;
+        }
 
-            <div class="country-details">
-              <div class="detail-card">
-                <i class="fas fa-city"></i>
-                <h3>Capital</h3>
-                <p>${capital}</p>
+        let html = "";
+
+        shows.forEach((item) => {
+          const show = item.show || item; // Handle both search response and direct show
+          const id = show.id;
+          const name = show.name || "Untitled";
+          const premiered = show.premiered || "";
+          const year = premiered ? new Date(premiered).getFullYear() : "N/A";
+          const rating = show.rating?.average
+            ? show.rating.average.toFixed(1)
+            : "N/A";
+          const image = show.image?.medium || null;
+          const genres = show.genres || [];
+          const summary = stripHtml(show.summary);
+          const type = show.type || "Show";
+
+          const isSaved = isShowSaved(id);
+
+          html += `
+            <div class="show-card" onclick="showDetail(${id})">
+              <div class="show-image">
+                ${
+                  image
+                    ? `<img src="${image}" alt="${name}">`
+                    : `<div class="no-image"><i class="fas fa-tv"></i></div>`
+                }
+                ${
+                  rating !== "N/A"
+                    ? `
+                  <div class="show-rating">
+                    <i class="fas fa-star"></i> ${rating}
+                  </div>
+                `
+                    : ""
+                }
               </div>
-
-              <div class="detail-card">
-                <i class="fas fa-users"></i>
-                <h3>Population</h3>
-                <p>${formatPopulation(country.population)}</p>
-                <small>people</small>
-              </div>
-
-              <div class="detail-card">
-                <i class="fas fa-globe"></i>
-                <h3>Region</h3>
-                <p>${country.region}</p>
-                <small>${country.subregion || ""}</small>
-              </div>
-
-              <div class="detail-card">
-                <i class="fas fa-money-bill-wave"></i>
-                <h3>Currency</h3>
-                <p>${currencies}</p>
-              </div>
-
-              <div class="detail-card">
-                <i class="fas fa-language"></i>
-                <h3>Languages</h3>
-                <div class="languages-list">
-                  ${languagesHtml}
+              <div class="show-info">
+                <h3 class="show-title">${name}</h3>
+                <div class="show-meta">
+                  <span class="show-year">${year}</span>
+                  <span class="show-type"><i class="fas fa-tv"></i> ${type}</span>
+                </div>
+                ${
+                  genres.length > 0
+                    ? `
+                  <div class="show-genres">
+                    ${genres
+                      .slice(0, 3)
+                      .map((genre) => `<span class="genre-tag">${genre}</span>`)
+                      .join("")}
+                  </div>
+                `
+                    : ""
+                }
+                <div class="show-summary">
+                  <p>${summary.substring(0, 150)}${summary.length > 150 ? "..." : ""}</p>
+                </div>
+                <div class="show-footer">
+                  <button class="save-show-btn ${isSaved ? "saved" : ""}" 
+                    onclick="event.stopPropagation(); saveShowFromCard(${id}, '${name.replace(/'/g, "\\'")}')">
+                    <i class="fas ${isSaved ? "fa-check" : "fa-bookmark"}"></i>
+                    ${isSaved ? "Saved" : "Save"}
+                  </button>
+                  <span style="color: var(--text-muted); font-size: 0.8rem;">
+                    <i class="fas fa-info-circle"></i> Click for details
+                  </span>
                 </div>
               </div>
+            </div>
+          `;
+        });
 
-              <div class="detail-card">
-                <i class="fas fa-clock"></i>
-                <h3>Time Zone</h3>
-                <p>${country.timezones[0]}</p>
-                <small>${country.timezones.length} time zone(s)</small>
+        grid.innerHTML = html;
+      }
+
+      /**
+       * Save show from card
+       */
+      function saveShowFromCard(showId, showName) {
+        event.stopPropagation();
+
+        // Instead of fetching again, find the show data from the card
+        const card = event.currentTarget.closest(".show-card");
+        if (card) {
+          // Try to extract show data from the card
+          const title =
+            card.querySelector(".show-title")?.textContent || showName;
+          const yearText =
+            card.querySelector(".show-year")?.textContent || "N/A";
+          const ratingText =
+            card.querySelector(".show-rating")?.textContent || "N/A";
+          const image = card.querySelector(".show-image img")?.src || null;
+
+          // Create a minimal show object with the ID
+          // The full details will be fetched when viewing details
+          const minimalShow = {
+            id: showId,
+            name: title,
+            // We'll fetch the rest when needed
+          };
+
+          // For now, fetch full details to save complete data
+          fetch(`${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`)
+            .then((response) => response.json())
+            .then((show) => {
+              saveShow(show);
+            })
+            .catch((error) => {
+              console.error("Error fetching show details:", error);
+              showNotification(
+                "Could not save show. Please try again.",
+                "warning",
+              );
+            });
+        } else {
+          // Fallback to fetching
+          fetch(`${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`)
+            .then((response) => response.json())
+            .then((show) => {
+              saveShow(show);
+            })
+            .catch((error) => {
+              console.error("Error fetching show details:", error);
+              showNotification(
+                "Could not save show. Please try again.",
+                "warning",
+              );
+            });
+        }
+      }
+
+      /**
+       * Save show to localStorage
+       */
+      function saveShow(show) {
+        const SAVED_SHOWS_KEY = "biggyflix_saved_shows";
+
+        // Check if already saved
+        const saved = JSON.parse(localStorage.getItem(SAVED_SHOWS_KEY) || "[]");
+        const exists = saved.some((s) => s.id === show.id);
+
+        if (exists) {
+          showNotification(
+            "This show is already in your watchlist!",
+            "warning",
+          );
+          return false;
+        }
+
+        // Create clean show object
+        const showToSave = {
+          id: show.id,
+          name: show.name,
+          summary: stripHtml(show.summary),
+          premiered: show.premiered,
+          rating: show.rating?.average,
+          image: show.image?.medium,
+          genres: show.genres || [],
+          status: show.status,
+          network: show.network?.name || show.webChannel?.name || "Unknown",
+          runtime: show.runtime,
+          type: show.type,
+          language: show.language,
+          officialSite: show.officialSite,
+          _links: show._links,
+          savedAt: new Date().toISOString(),
+        };
+
+        saved.push(showToSave);
+        localStorage.setItem(SAVED_SHOWS_KEY, JSON.stringify(saved));
+
+        showNotification(
+          `${showToSave.name} saved to your watchlist!`,
+          "success",
+        );
+
+        // FIXED: Update ONLY the specific show's save button by using data attributes
+        // Update the button in the grid view
+        document.querySelectorAll(".show-card").forEach((card) => {
+          // Try to find the show ID from the card's onclick attribute
+          const onclickAttr = card.getAttribute("onclick");
+          if (onclickAttr) {
+            const match = onclickAttr.match(/showDetail\((\d+)\)/);
+            if (match && parseInt(match[1]) === show.id) {
+              const saveBtn = card.querySelector(".save-show-btn");
+              if (saveBtn) {
+                saveBtn.classList.add("saved");
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved';
+              }
+            }
+          }
+        });
+
+        // Update the button in the detail view if it's currently displayed
+        const detailSaveBtn = document.querySelector(
+          "#show-detail .save-show-btn",
+        );
+        if (
+          detailSaveBtn &&
+          currentShowData &&
+          currentShowData.id === show.id
+        ) {
+          detailSaveBtn.classList.add("saved");
+          detailSaveBtn.innerHTML =
+            '<i class="fas fa-check"></i> Saved to Watchlist';
+        }
+
+        return true;
+      }
+
+      /**
+       * Show detail view
+       */
+      async function showDetail(showId) {
+        showLoading();
+
+        try {
+          // Fetch show with cast and episodes embedded
+          const response = await fetch(
+            `${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`,
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch show details");
+          }
+
+          const show = await response.json();
+          currentShowData = show;
+          displayShowDetail(show);
+          hideLoading();
+        } catch (error) {
+          console.error("Error fetching show details:", error);
+          showError("Could not load show details. Please try again.");
+        }
+      }
+
+      /**
+       * Display show detail view (FIXED VERSION)
+       */
+      function displayShowDetail(show) {
+        const grid = document.getElementById("shows-grid");
+        const detailView = document.getElementById("show-detail");
+
+        if (grid) grid.style.display = "none";
+        detailView.style.display = "block";
+
+        const name = show.name || "Untitled";
+        const premiered = show.premiered || "";
+        const year = premiered ? new Date(premiered).getFullYear() : "N/A";
+        const rating = show.rating?.average
+          ? show.rating.average.toFixed(1)
+          : "N/A";
+
+        // Fix: Get the best available image
+        let imageUrl = null;
+        if (show.image?.original) {
+          imageUrl = show.image.original;
+        } else if (show.image?.medium) {
+          imageUrl = show.image.medium;
+        }
+
+        const genres = show.genres || [];
+        const summary = stripHtml(show.summary);
+        const cast = show._embedded?.cast?.slice(0, 8) || [];
+        const episodes = show._embedded?.episodes || [];
+        const seasons = [...new Set(episodes.map((ep) => ep.season))].sort();
+
+        const isSaved = isShowSaved(show.id);
+
+        // Get first few episodes
+        const sampleEpisodes = episodes.slice(0, 5);
+
+        detailView.innerHTML = `
+          <div class="back-to-grid" onclick="showGrid()">
+            <span class="back-btn" style="display: inline-flex; margin-bottom: 20px;">
+              <i class="fas fa-arrow-left"></i> Back to Results
+            </span>
+          </div>
+          
+          <div class="show-detail-header">
+            ${
+              imageUrl
+                ? `<img src="${imageUrl}" alt="${name}" class="detail-image" 
+                onerror="this.onerror=null; this.src='https://via.placeholder.com/300x450/0a1128/00d9ff?text=${encodeURIComponent(name)}';">`
+                : `<div class="detail-image no-image">
+                <i class="fas fa-tv"></i>
+              </div>`
+            }
+            <div class="detail-info">
+              <h2>${name}</h2>
+              
+              <div class="detail-meta">
+                <span class="detail-meta-item"><i class="fas fa-calendar"></i> ${year}</span>
+                ${rating !== "N/A" ? `<span class="detail-meta-item"><i class="fas fa-star" style="color: var(--secondary-gold);"></i> ${rating}/10</span>` : ""}
+                ${show.runtime ? `<span class="detail-meta-item"><i class="fas fa-clock"></i> ${show.runtime} min</span>` : ""}
+                ${show.language ? `<span class="detail-meta-item"><i class="fas fa-globe"></i> ${show.language}</span>` : ""}
+                ${show.status ? `<span class="detail-meta-item"><i class="fas fa-signal"></i> ${show.status}</span>` : ""}
+              </div>
+              
+              ${
+                genres.length > 0
+                  ? `
+                <div class="detail-genres">
+                  ${genres.map((g) => `<span class="detail-genre">${g}</span>`).join("")}
+                </div>
+              `
+                  : ""
+              }
+              
+              <div class="detail-summary">
+                <p>${summary}</p>
+              </div>
+              
+              <div class="detail-stats">
+                <div class="detail-stat">
+                  <div class="detail-stat-label">Network</div>
+                  <div class="detail-stat-value">${show.network?.name || show.webChannel?.name || "N/A"}</div>
+                </div>
+                <div class="detail-stat">
+                  <div class="detail-stat-label">Seasons</div>
+                  <div class="detail-stat-value">${seasons.length}</div>
+                </div>
+                <div class="detail-stat">
+                  <div class="detail-stat-label">Episodes</div>
+                  <div class="detail-stat-value">${episodes.length}</div>
+                </div>
+                ${
+                  show.schedule?.time
+                    ? `
+                <div class="detail-stat">
+                  <div class="detail-stat-label">Air Time</div>
+                  <div class="detail-stat-value">${show.schedule.time}</div>
+                </div>
+                `
+                    : ""
+                }
+              </div>
+              
+              ${
+                cast.length > 0
+                  ? `
+                <div style="margin-top: 30px;">
+                  <h3 style="color: var(--secondary-gold); margin-bottom: 15px;">Top Cast</h3>
+                  <div class="cast-list">
+                    ${cast
+                      .map(
+                        (person) => `
+                      <div class="cast-item">
+                        <div class="cast-image">
+                          <i class="fas fa-user"></i>
+                        </div>
+                        <div class="cast-name">${person.person.name}</div>
+                        <div class="cast-character">${person.character.name}</div>
+                      </div>
+                    `,
+                      )
+                      .join("")}
+                  </div>
+                </div>
+              `
+                  : ""
+              }
+              
+              <div style="display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
+                <button class="save-show-btn ${isSaved ? "saved" : ""}" 
+                  onclick="saveCurrentShow()" 
+                  style="padding: 15px 30px; font-size: 1rem;">
+                  <i class="fas ${isSaved ? "fa-check" : "fa-bookmark"}"></i>
+                  ${isSaved ? "Saved to Watchlist" : "Save to Watchlist"}
+                </button>
+                
+                ${
+                  show.officialSite
+                    ? `
+                  <a href="${show.officialSite}" target="_blank" class="save-show-btn" 
+                    style="padding: 15px 30px; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-external-link-alt"></i> Official Site
+                  </a>
+                `
+                    : ""
+                }
               </div>
             </div>
-
-            <div class="country-map">
-              <a href="https://www.google.com/maps/search/?api=1&query=${country.name.common}" target="_blank">
-                <i class="fas fa-map-marked-alt"></i> View on Google Maps
-              </a>
-            </div>
-
-            <div style="margin-top: 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
-              <i class="fas fa-info-circle"></i> Data provided by REST Countries API
-            </div>
           </div>
+
+          ${
+            sampleEpisodes.length > 0
+              ? `
+            <div class="episodes-section">
+              <h3><i class="fas fa-list"></i> Recent Episodes</h3>
+              ${sampleEpisodes
+                .map(
+                  (ep) => `
+                <div class="episode-item">
+                  <div class="episode-number">S${ep.season}E${ep.number}</div>
+                  <div class="episode-info">
+                    <h4>${ep.name}</h4>
+                    <p>${stripHtml(ep.summary).substring(0, 100)}${ep.summary && stripHtml(ep.summary).length > 100 ? "..." : ""}</p>
+                    <div class="episode-date"><i class="far fa-calendar-alt"></i> ${ep.airdate || "TBA"}</div>
+                  </div>
+                </div>
+              `,
+                )
+                .join("")}
+            </div>
+          `
+              : ""
+          }
+        `;
+      }
+
+      /**
+       * Save current show from detail view
+       */
+      function saveCurrentShow() {
+        if (currentShowData) {
+          saveShow(currentShowData);
+        }
+      }
+
+      /**
+       * Show grid (hide detail view)
+       */
+      function showGrid() {
+        document.getElementById("shows-grid").style.display = "grid";
+        document.getElementById("show-detail").style.display = "none";
+      }
+
+      /**
+       * Show notification message
+       */
+      function showNotification(message, type = "success") {
+        // Remove existing notification
+        const existing = document.querySelector(".success-notification");
+        if (existing) existing.remove();
+
+        const notification = document.createElement("div");
+        notification.className = "success-notification";
+
+        let icon = "fa-check-circle";
+        let color = "#00ff00";
+
+        if (type === "warning") {
+          icon = "fa-exclamation-triangle";
+          color = "#ffaa00";
+          notification.classList.add("warning");
+        } else if (type === "info") {
+          icon = "fa-info-circle";
+          color = "var(--neon-cyan)";
+          notification.classList.add("info");
+        }
+
+        notification.style.borderColor = color;
+        notification.style.color = color;
+        notification.innerHTML = `
+          <i class="fas ${icon}"></i>
+          <span>${message}</span>
         `;
 
-        container.innerHTML = html;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
       }
 
       /**
        * Main search function
        */
-      async function searchCountry() {
-        const searchInput = document.getElementById("country-search");
-        const countryName = searchInput.value.trim();
+      async function searchShows() {
+        const searchInput = document.getElementById("show-search");
+        const searchTerm = searchInput.value.trim();
 
         // Validate input
-        if (!countryName) {
-          showError("Please enter a country name to search.");
+        if (!searchTerm) {
+          showError("Please enter a TV show name to search.");
           return;
         }
 
@@ -703,41 +1484,35 @@
         showLoading();
 
         try {
-          // Make API request
+          // Make API request to TVmaze - no API key needed!
           const response = await fetch(
-            `${API_BASE_URL}/name/${encodeURIComponent(countryName)}?fullText=false`,
+            `${API_BASE_URL}/search/shows?q=${encodeURIComponent(searchTerm)}`,
           );
 
           if (!response.ok) {
-            if (response.status === 404) {
-              throw new Error(
-                `No country found with the name "${countryName}". Please check the spelling and try again.`,
-              );
-            } else {
-              throw new Error(
-                `API request failed with status: ${response.status}`,
-              );
-            }
+            throw new Error(
+              `API request failed with status: ${response.status}`,
+            );
           }
 
           const data = await response.json();
 
           if (!data || data.length === 0) {
-            throw new Error(`No country found with the name "${countryName}".`);
+            showError(
+              `No results found for "${searchTerm}". Please try a different search.`,
+            );
+            return;
           }
-
-          // Get the first result (most relevant)
-          const country = data[0];
 
           // Hide loading, clear error, display data
           hideLoading();
           document.getElementById("error").style.display = "none";
-          displayCountryData(country);
+          displayShows(data);
 
           // Add to recent searches
-          addToRecentSearches(country.name.common);
+          addToRecentSearches(searchTerm);
         } catch (error) {
-          console.error("Error fetching country data:", error);
+          console.error("Error fetching show data:", error);
           showError(
             error.message || "An unexpected error occurred. Please try again.",
           );
@@ -748,10 +1523,10 @@
        * Search on Enter key press
        */
       document
-        .getElementById("country-search")
+        .getElementById("show-search")
         .addEventListener("keypress", function (event) {
           if (event.key === "Enter") {
-            searchCountry();
+            searchShows();
           }
         });
 
@@ -759,29 +1534,62 @@
        * Clear error when user starts typing
        */
       document
-        .getElementById("country-search")
+        .getElementById("show-search")
         .addEventListener("input", function () {
           document.getElementById("error").style.display = "none";
         });
 
       /**
-       * Load initial country on page load (Philippines)
+       * Load popular shows on page load
        */
       document.addEventListener("DOMContentLoaded", function () {
         displayRecentSearches();
 
-        // Check if user is logged in (optional - can be removed if you want public access)
+        // Check if user is logged in (optional)
         const loggedInUser = sessionStorage.getItem("loggedInUser");
         if (!loggedInUser) {
-          console.log("No user logged in - but country explorer is public");
-          // Uncomment the next line if you want to require login
-          // window.location.href = 'login.html';
+          console.log("No user logged in - but TV explorer is public");
         }
 
-        // Load initial country (Philippines)
-        setTimeout(() => {
-          searchCountry();
-        }, 500);
+        // Load some popular shows initially
+        async function loadPopularShows() {
+          showLoading();
+          try {
+            // Get schedule for today to show what's currently airing
+            const today = new Date().toISOString().split("T")[0];
+            const response = await fetch(
+              `${API_BASE_URL}/schedule?country=US&date=${today}`,
+            );
+            const schedule = await response.json();
+
+            // Get unique shows from schedule
+            const showIds = [...new Set(schedule.map((item) => item.show.id))];
+            const showPromises = showIds
+              .slice(0, 12)
+              .map((id) =>
+                fetch(`${API_BASE_URL}/shows/${id}`).then((res) => res.json()),
+              );
+
+            const shows = await Promise.all(showPromises);
+            hideLoading();
+            displayShows(shows.map((show) => ({ show })));
+          } catch (error) {
+            console.error("Error loading popular shows:", error);
+            // Fallback to search for popular shows
+            try {
+              const response = await fetch(
+                `${API_BASE_URL}/search/shows?q=the`,
+              );
+              const data = await response.json();
+              hideLoading();
+              displayShows(data.slice(0, 12));
+            } catch (fallbackError) {
+              showError("Could not load shows. Please try searching.");
+            }
+          }
+        }
+
+        loadPopularShows();
       });
     </script>
   </body>

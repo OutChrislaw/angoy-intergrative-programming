@@ -5,6 +5,10 @@
     <title>BIGGY FLIX – Watch Movies & Series Online</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body class="index-page">
     <!-- Header -->
@@ -17,6 +21,7 @@
       <nav>
         <a href="login.html">Log In</a>
         <a href="signup.html">Sign In</a>
+        <a href="api.html">Explore</a>
       </nav>
     </header>
 
@@ -140,6 +145,56 @@
             based on your mood and available time.
           </p>
         </div>
+
+        <!-- New: Country Explorer Card -->
+        <div
+          class="feature-card"
+          onclick="window.location.href = 'api.html'"
+          style="cursor: pointer"
+        >
+          <h3>
+            <i class="fas fa-globe" style="color: var(--neon-cyan)"></i> Country
+            Explorer
+          </h3>
+          <p>
+            Explore detailed information about countries worldwide. View flags,
+            capitals, populations, and more with our interactive country
+            explorer.
+          </p>
+          <span
+            style="
+              color: var(--neon-cyan);
+              font-size: 0.9rem;
+              display: inline-block;
+              margin-top: 15px;
+            "
+          >
+            Try now <i class="fas fa-arrow-right"></i>
+          </span>
+        </div>
+
+        <!-- New: Saved Countries Card -->
+        <div
+          class="feature-card"
+          onclick="window.location.href = 'saved-countries.html'"
+          style="cursor: pointer"
+        >
+          <h3><i class="fas fa-bookmark"></i> Saved Countries</h3>
+          <p>
+            Create your personal collection of favorite countries. Save flags,
+            capitals, and population data for quick access anytime.
+          </p>
+          <span
+            style="
+              color: var(--neon-cyan);
+              font-size: 0.9rem;
+              display: inline-block;
+              margin-top: 15px;
+            "
+          >
+            View collection <i class="fas fa-arrow-right"></i>
+          </span>
+        </div>
       </div>
     </section>
 
@@ -205,6 +260,8 @@
         <li><a href="#">Help Center</a></li>
         <li><a href="#">Terms of Use</a></li>
         <li><a href="#">Privacy</a></li>
+        <li><a href="api.html">Country Explorer</a></li>
+        <li><a href="saved-countries.html">Saved Countries</a></li>
       </ul>
 
       <p>© BIGGY FLIX</p>

@@ -5,6 +5,10 @@
     <title>My Account – BIGGY FLIX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <!-- Header -->
@@ -16,6 +20,8 @@
       </h1>
       <nav>
         <a href="index.html">Home</a>
+        <a href="api.html">Explore</a>
+        <a href="saved-shows.html"><i class="fas fa-bookmark"></i> Saved</a>
         <a href="login.html">Logout</a>
       </nav>
     </header>
@@ -507,6 +513,39 @@
             <span class="stat-box-label">Avg. Rating Given</span>
             <span class="stat-box-value">⭐ 4.1</span>
             <span class="stat-box-info">50 ratings total</span>
+          </div>
+        </div>
+
+        <!-- New: Saved Countries Card -->
+        <div class="rightbar-card">
+          <h4>
+            <i class="fas fa-bookmark" style="color: var(--neon-cyan)"></i>
+            Saved Countries
+          </h4>
+          <p
+            style="
+              font-size: 0.9rem;
+              color: var(--text-muted);
+              margin-bottom: 15px;
+            "
+          >
+            View and manage your favorite countries from around the world.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <a
+              href="saved-shows.html"
+              class="btn-secondary-small"
+              style="text-align: center; display: block; flex: 1"
+            >
+              <i class="fas fa-map-marked-alt"></i> View Saved
+            </a>
+            <a
+              href="api.html"
+              class="btn-secondary-small"
+              style="text-align: center; display: block; flex: 1"
+            >
+              <i class="fas fa-search"></i> Explore
+            </a>
           </div>
         </div>
 
