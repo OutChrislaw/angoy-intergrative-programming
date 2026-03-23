@@ -50,18 +50,23 @@
         font-family: "Space Mono", monospace;
       }
 
-      .search-box {
+      .search-wrapper {
         display: flex;
         gap: 15px;
-        max-width: 700px;
+        max-width: 900px;
         margin: 0 auto;
         flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
+      }
+
+      .search-box {
+        flex: 2;
+        min-width: 300px;
       }
 
       .search-box input {
-        flex: 1;
-        min-width: 300px;
+        width: 100%;
         padding: 16px 20px;
         background: rgba(10, 17, 40, 0.8);
         border: 2px solid var(--neon-cyan);
@@ -83,7 +88,13 @@
         font-style: italic;
       }
 
-      .search-box button {
+      .search-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .search-btn {
         padding: 16px 35px;
         background: linear-gradient(
           135deg,
@@ -103,56 +114,52 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        white-space: nowrap;
       }
 
-      .search-box button:hover {
+      .search-btn:hover {
         transform: scale(1.05);
         box-shadow: 0 0 30px var(--neon-cyan);
       }
 
-      .search-box button i {
-        font-size: 1.1rem;
-      }
-
-      .filter-tabs {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-top: 30px;
-        flex-wrap: wrap;
-      }
-
-      .filter-tab {
-        padding: 12px 25px;
-        background: rgba(0, 217, 255, 0.1);
-        border: 2px solid transparent;
-        border-radius: 40px;
-        color: var(--text-muted);
+      .filter-select {
+        padding: 14px 24px;
+        background: rgba(10, 17, 40, 0.8);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 50px;
+        color: var(--text-light);
         font-family: "Outfit", sans-serif;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        min-width: 160px;
       }
 
-      .filter-tab:hover {
+      .filter-select:hover {
         background: rgba(0, 217, 255, 0.2);
-        color: var(--neon-cyan);
-        transform: translateY(-2px);
-      }
-
-      .filter-tab.active {
-        background: var(--neon-cyan);
-        color: var(--primary-dark-blue);
         border-color: var(--secondary-gold);
-        box-shadow: 0 0 20px var(--neon-cyan);
       }
 
-      .filter-tab i {
-        font-size: 1rem;
+      .filter-select option {
+        background: var(--primary-dark-blue);
+      }
+
+      .example-tags {
+        margin-top: 25px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .example-tags span {
+        color: var(--neon-cyan);
+        cursor: pointer;
+        text-decoration: underline;
+        margin: 0 3px;
+      }
+
+      .example-tags span:hover {
+        color: var(--secondary-gold);
       }
 
       .loading-indicator {
@@ -387,6 +394,79 @@
         color: #00ff00;
       }
 
+      /* Pagination */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+      }
+
+      .page-btn {
+        padding: 12px 24px;
+        background: rgba(0, 217, 255, 0.15);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 40px;
+        color: var(--neon-cyan);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .page-btn:hover:not(:disabled) {
+        background: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        box-shadow: 0 0 20px var(--neon-cyan);
+      }
+
+      .page-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .page-numbers {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .page-number {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: 50%;
+        color: var(--text-muted);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+
+      .page-number:hover {
+        background: rgba(0, 217, 255, 0.2);
+        border-color: var(--neon-cyan);
+        color: var(--neon-cyan);
+      }
+
+      .page-number.active {
+        background: var(--neon-cyan);
+        border-color: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        box-shadow: 0 0 15px var(--neon-cyan);
+      }
+
       .show-detail-view {
         background: linear-gradient(
           135deg,
@@ -408,7 +488,6 @@
         flex-wrap: wrap;
       }
 
-      /* Fix for detail image */
       .detail-image {
         width: 300px;
         height: 450px;
@@ -419,8 +498,7 @@
         background: linear-gradient(135deg, #1a2a5e, #0a1128);
       }
 
-      /* Fix for no-image fallback */
-      .no-image {
+      .no-image-large {
         width: 300px;
         height: 450px;
         display: flex;
@@ -430,11 +508,7 @@
         border: 3px solid var(--neon-cyan);
         border-radius: 16px;
         color: var(--neon-cyan);
-      }
-
-      .no-image i {
         font-size: 4rem;
-        opacity: 0.8;
       }
 
       .detail-info {
@@ -621,6 +695,28 @@
       .back-to-grid {
         margin-bottom: 20px;
         cursor: pointer;
+        display: inline-block;
+      }
+
+      .back-btn-custom {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: rgba(0, 217, 255, 0.1);
+        border: 2px solid var(--neon-cyan);
+        border-radius: 40px;
+        color: var(--neon-cyan);
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .back-btn-custom:hover {
+        background: var(--neon-cyan);
+        color: var(--primary-dark-blue);
+        box-shadow: 0 0 20px var(--neon-cyan);
+        cursor: pointer;
       }
 
       .success-notification {
@@ -652,7 +748,7 @@
       }
 
       .recent-searches {
-        margin-top: 30px;
+        margin-top: 25px;
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
@@ -677,23 +773,6 @@
         transform: scale(1.05);
       }
 
-      .example-tags {
-        margin-top: 15px;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-
-      .example-tags span {
-        color: var(--neon-cyan);
-        cursor: pointer;
-        text-decoration: underline;
-        margin: 0 3px;
-      }
-
-      .example-tags span:hover {
-        color: var(--secondary-gold);
-      }
-
       @media (max-width: 768px) {
         .search-section {
           padding: 25px;
@@ -701,6 +780,21 @@
 
         .search-section h1 {
           font-size: 1.8rem;
+        }
+
+        .search-wrapper {
+          flex-direction: column;
+        }
+
+        .search-actions {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .search-btn,
+        .filter-select {
+          width: 100%;
+          justify-content: center;
         }
 
         .show-detail-header {
@@ -714,7 +808,7 @@
           height: 300px;
         }
 
-        .no-image {
+        .no-image-large {
           width: 200px;
           height: 300px;
         }
@@ -723,13 +817,21 @@
           font-size: 1.8rem;
         }
 
-        .filter-tabs {
-          flex-direction: column;
-          align-items: stretch;
+        .page-numbers {
+          order: 3;
+          width: 100%;
+          justify-content: center;
         }
 
-        .filter-tab {
-          justify-content: center;
+        .page-btn {
+          padding: 8px 16px;
+          font-size: 0.8rem;
+        }
+
+        .page-number {
+          width: 36px;
+          height: 36px;
+          font-size: 0.9rem;
         }
 
         .success-notification {
@@ -764,9 +866,11 @@
 
     <div class="explorer-container">
       <!-- Back Button -->
-      <a href="javascript:history.back()" class="back-btn">
-        <i class="fas fa-arrow-left"></i> Go Back
-      </a>
+      <div class="back-to-grid">
+        <span class="back-btn-custom" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i> Go Back
+        </span>
+      </div>
 
       <!-- Search Section -->
       <div class="search-section">
@@ -775,16 +879,30 @@
           Discover detailed information about your favorite TV shows and series
         </p>
 
-        <div class="search-box">
-          <input
-            type="text"
-            id="show-search"
-            placeholder="Search for a TV show (e.g., Breaking Bad, Game of Thrones)"
-            value="Breaking Bad"
-          />
-          <button onclick="searchShows()">
-            <i class="fas fa-search"></i> Search
-          </button>
+        <div class="search-wrapper">
+          <div class="search-box">
+            <input
+              type="text"
+              id="show-search"
+              placeholder="Search for a TV show (e.g., Breaking Bad, Game of Thrones)"
+              value=""
+            />
+          </div>
+          <div class="search-actions">
+            <button class="search-btn" onclick="searchShows()">
+              <i class="fas fa-search"></i> Search
+            </button>
+            <select
+              id="sort-filter"
+              class="filter-select"
+              onchange="applyFiltersAndSort()"
+            >
+              <option value="popularity">🔥 Most Popular</option>
+              <option value="rating">⭐ Most Rated</option>
+              <option value="name-asc">A → Z (Name)</option>
+              <option value="name-desc">Z → A (Name)</option>
+            </select>
+          </div>
         </div>
 
         <div class="example-tags">
@@ -817,6 +935,17 @@
       <!-- Results Container (Shows Grid) -->
       <div id="results-container">
         <div class="results-grid" id="shows-grid"></div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="pagination" style="display: none">
+        <button class="page-btn" id="prev-page" onclick="changePage(-1)">
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <div class="page-numbers" id="page-numbers"></div>
+        <button class="page-btn" id="next-page" onclick="changePage(1)">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
 
       <!-- Show Detail View (hidden by default) -->
@@ -870,10 +999,94 @@
       // Current show data for detail view
       let currentShowData = null;
 
+      // Store all shows data for pagination and filtering
+      let allShowsData = [];
+      let filteredShows = [];
+      let currentPage = 1;
+      const ITEMS_PER_PAGE = 12;
+      let currentSort = "popularity";
+      let isSearchMode = false;
+      let currentSearchTerm = "";
+
       // Initialize recent searches from localStorage
       let recentSearches = JSON.parse(
         localStorage.getItem("recentShowSearches") || "[]",
       );
+
+      /**
+       * Go back function - fixed
+       */
+      function goBack() {
+        const detailView = document.getElementById("show-detail");
+        const grid = document.getElementById("shows-grid");
+        const pagination = document.getElementById("pagination");
+
+        if (detailView.style.display === "block") {
+          // If detail view is open, close it and show grid
+          grid.style.display = "grid";
+          detailView.style.display = "none";
+          if (pagination && filteredShows.length > 0) {
+            pagination.style.display = "flex";
+          }
+        } else {
+          // Otherwise, go to previous page in browser history
+          window.history.back();
+        }
+      }
+
+      /**
+       * Load default popular shows
+       */
+      async function loadDefaultShows() {
+        showLoading();
+        isSearchMode = false;
+        currentSearchTerm = "";
+
+        try {
+          // Fetch multiple pages to get a good selection of popular shows
+          const pages = [0, 1, 2];
+          const allShowsPromises = pages.map((page) =>
+            fetch(`${API_BASE_URL}/shows?page=${page}`).then((res) =>
+              res.json(),
+            ),
+          );
+
+          const results = await Promise.all(allShowsPromises);
+          const allShows = results.flat();
+
+          // Filter shows with ratings and sort by rating (popularity)
+          const topShows = allShows
+            .filter((show) => show.rating?.average)
+            .sort((a, b) => (b.rating?.average || 0) - (a.rating?.average || 0))
+            .slice(0, 100);
+
+          allShowsData = topShows;
+          filteredShows = sortShows(allShowsData, currentSort);
+          currentPage = 1;
+          displayPaginatedShows();
+          hideLoading();
+        } catch (error) {
+          console.error("Error loading popular shows:", error);
+          // Fallback to search for "the" to get popular shows
+          try {
+            const response = await fetch(`${API_BASE_URL}/search/shows?q=the`);
+            const data = await response.json();
+            allShowsData = data
+              .map((item) => item.show)
+              .filter((show) => show && show.rating?.average);
+            if (allShowsData.length === 0) {
+              throw new Error("No shows found");
+            }
+            filteredShows = sortShows(allShowsData, currentSort);
+            currentPage = 1;
+            displayPaginatedShows();
+            hideLoading();
+          } catch (fallbackError) {
+            hideLoading();
+            showError("Could not load shows. Please try searching.");
+          }
+        }
+      }
 
       /**
        * Display recent searches
@@ -891,7 +1104,6 @@
         container.innerHTML =
           '<span style="color: var(--text-muted);">Recent:</span>';
 
-        // Show last 5 searches
         recentSearches.slice(0, 5).forEach((search) => {
           const tag = document.createElement("span");
           tag.className = "recent-tag";
@@ -905,35 +1117,26 @@
        * Add search to recent searches
        */
       function addToRecentSearches(searchTerm) {
-        // Remove if already exists
         recentSearches = recentSearches.filter(
           (s) => s.toLowerCase() !== searchTerm.toLowerCase(),
         );
-
-        // Add to beginning
         recentSearches.unshift(searchTerm);
-
-        // Keep only last 10
         if (recentSearches.length > 10) {
           recentSearches = recentSearches.slice(0, 10);
         }
-
-        // Save to localStorage
         localStorage.setItem(
           "recentShowSearches",
           JSON.stringify(recentSearches),
         );
-
-        // Update display
         displayRecentSearches();
       }
 
       /**
-       * Quick search function for example tags
+       * Quick search function
        */
       function quickSearch(searchTerm) {
         document.getElementById("show-search").value = searchTerm;
-        searchShows();
+        performSearch(searchTerm);
       }
 
       /**
@@ -944,6 +1147,7 @@
         document.getElementById("error").style.display = "none";
         document.getElementById("shows-grid").innerHTML = "";
         document.getElementById("show-detail").style.display = "none";
+        document.getElementById("pagination").style.display = "none";
       }
 
       /**
@@ -962,10 +1166,11 @@
         document.getElementById("error-text").textContent = message;
         document.getElementById("shows-grid").innerHTML = "";
         document.getElementById("show-detail").style.display = "none";
+        document.getElementById("pagination").style.display = "none";
       }
 
       /**
-       * Strip HTML tags from summary
+       * Strip HTML tags
        */
       function stripHtml(html) {
         if (!html) return "No summary available.";
@@ -985,9 +1190,150 @@
       }
 
       /**
+       * Apply sorting
+       */
+      function sortShows(shows, sortType) {
+        const sorted = [...shows];
+
+        switch (sortType) {
+          case "name-asc":
+            return sorted.sort((a, b) => a.name.localeCompare(b.name));
+          case "name-desc":
+            return sorted.sort((a, b) => b.name.localeCompare(a.name));
+          case "rating":
+            return sorted.sort((a, b) => {
+              const ratingA = a.rating?.average || 0;
+              const ratingB = b.rating?.average || 0;
+              return ratingB - ratingA;
+            });
+          case "popularity":
+          default:
+            return sorted.sort((a, b) => {
+              const ratingA = a.rating?.average || 0;
+              const ratingB = b.rating?.average || 0;
+              return ratingB - ratingA;
+            });
+        }
+      }
+
+      /**
+       * Apply filters and sorting
+       */
+      function applyFiltersAndSort() {
+        const sortSelect = document.getElementById("sort-filter");
+        currentSort = sortSelect.value;
+
+        filteredShows = sortShows(allShowsData, currentSort);
+        currentPage = 1;
+        displayPaginatedShows();
+      }
+
+      /**
+       * Display paginated shows
+       */
+      function displayPaginatedShows() {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        const showsToDisplay = filteredShows.slice(startIndex, endIndex);
+
+        displayShowsGrid(showsToDisplay);
+        updatePaginationControls();
+      }
+
+      /**
+       * Update pagination controls
+       */
+      function updatePaginationControls() {
+        const totalPages = Math.ceil(filteredShows.length / ITEMS_PER_PAGE);
+        const paginationDiv = document.getElementById("pagination");
+
+        if (filteredShows.length === 0 || totalPages <= 1) {
+          paginationDiv.style.display = "none";
+          return;
+        }
+
+        paginationDiv.style.display = "flex";
+
+        const prevBtn = document.getElementById("prev-page");
+        const nextBtn = document.getElementById("next-page");
+
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+
+        const pageNumbersDiv = document.getElementById("page-numbers");
+        pageNumbersDiv.innerHTML = "";
+
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, currentPage + 2);
+
+        if (startPage > 1) {
+          const firstBtn = document.createElement("span");
+          firstBtn.className = "page-number";
+          firstBtn.textContent = "1";
+          firstBtn.onclick = () => goToPage(1);
+          pageNumbersDiv.appendChild(firstBtn);
+
+          if (startPage > 2) {
+            const dots = document.createElement("span");
+            dots.className = "page-number";
+            dots.textContent = "...";
+            dots.style.cursor = "default";
+            pageNumbersDiv.appendChild(dots);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageBtn = document.createElement("span");
+          pageBtn.className =
+            "page-number" + (i === currentPage ? " active" : "");
+          pageBtn.textContent = i;
+          pageBtn.onclick = () => goToPage(i);
+          pageNumbersDiv.appendChild(pageBtn);
+        }
+
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            const dots = document.createElement("span");
+            dots.className = "page-number";
+            dots.textContent = "...";
+            dots.style.cursor = "default";
+            pageNumbersDiv.appendChild(dots);
+          }
+
+          const lastBtn = document.createElement("span");
+          lastBtn.className = "page-number";
+          lastBtn.textContent = totalPages;
+          lastBtn.onclick = () => goToPage(totalPages);
+          pageNumbersDiv.appendChild(lastBtn);
+        }
+      }
+
+      /**
+       * Go to specific page
+       */
+      function goToPage(page) {
+        currentPage = page;
+        displayPaginatedShows();
+        document
+          .getElementById("results-container")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      /**
+       * Change page
+       */
+      function changePage(delta) {
+        const totalPages = Math.ceil(filteredShows.length / ITEMS_PER_PAGE);
+        const newPage = currentPage + delta;
+        if (newPage >= 1 && newPage <= totalPages) {
+          goToPage(newPage);
+        }
+      }
+
+      /**
        * Display shows in grid
        */
-      function displayShows(shows) {
+      function displayShowsGrid(shows) {
         const grid = document.getElementById("shows-grid");
 
         if (!shows || shows.length === 0) {
@@ -1003,8 +1349,7 @@
 
         let html = "";
 
-        shows.forEach((item) => {
-          const show = item.show || item; // Handle both search response and direct show
+        shows.forEach((show) => {
           const id = show.id;
           const name = show.name || "Untitled";
           const premiered = show.premiered || "";
@@ -1081,55 +1426,18 @@
        */
       function saveShowFromCard(showId, showName) {
         event.stopPropagation();
-
-        // Instead of fetching again, find the show data from the card
-        const card = event.currentTarget.closest(".show-card");
-        if (card) {
-          // Try to extract show data from the card
-          const title =
-            card.querySelector(".show-title")?.textContent || showName;
-          const yearText =
-            card.querySelector(".show-year")?.textContent || "N/A";
-          const ratingText =
-            card.querySelector(".show-rating")?.textContent || "N/A";
-          const image = card.querySelector(".show-image img")?.src || null;
-
-          // Create a minimal show object with the ID
-          // The full details will be fetched when viewing details
-          const minimalShow = {
-            id: showId,
-            name: title,
-            // We'll fetch the rest when needed
-          };
-
-          // For now, fetch full details to save complete data
-          fetch(`${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`)
-            .then((response) => response.json())
-            .then((show) => {
-              saveShow(show);
-            })
-            .catch((error) => {
-              console.error("Error fetching show details:", error);
-              showNotification(
-                "Could not save show. Please try again.",
-                "warning",
-              );
-            });
-        } else {
-          // Fallback to fetching
-          fetch(`${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`)
-            .then((response) => response.json())
-            .then((show) => {
-              saveShow(show);
-            })
-            .catch((error) => {
-              console.error("Error fetching show details:", error);
-              showNotification(
-                "Could not save show. Please try again.",
-                "warning",
-              );
-            });
-        }
+        fetch(`${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`)
+          .then((response) => response.json())
+          .then((show) => {
+            saveShow(show);
+          })
+          .catch((error) => {
+            console.error("Error fetching show details:", error);
+            showNotification(
+              "Could not save show. Please try again.",
+              "warning",
+            );
+          });
       }
 
       /**
@@ -1137,8 +1445,6 @@
        */
       function saveShow(show) {
         const SAVED_SHOWS_KEY = "biggyflix_saved_shows";
-
-        // Check if already saved
         const saved = JSON.parse(localStorage.getItem(SAVED_SHOWS_KEY) || "[]");
         const exists = saved.some((s) => s.id === show.id);
 
@@ -1150,7 +1456,6 @@
           return false;
         }
 
-        // Create clean show object
         const showToSave = {
           id: show.id,
           name: show.name,
@@ -1177,10 +1482,8 @@
           "success",
         );
 
-        // FIXED: Update ONLY the specific show's save button by using data attributes
-        // Update the button in the grid view
+        // Update the specific show's save button
         document.querySelectorAll(".show-card").forEach((card) => {
-          // Try to find the show ID from the card's onclick attribute
           const onclickAttr = card.getAttribute("onclick");
           if (onclickAttr) {
             const match = onclickAttr.match(/showDetail\((\d+)\)/);
@@ -1194,7 +1497,6 @@
           }
         });
 
-        // Update the button in the detail view if it's currently displayed
         const detailSaveBtn = document.querySelector(
           "#show-detail .save-show-btn",
         );
@@ -1218,7 +1520,6 @@
         showLoading();
 
         try {
-          // Fetch show with cast and episodes embedded
           const response = await fetch(
             `${API_BASE_URL}/shows/${showId}?embed[]=cast&embed[]=episodes`,
           );
@@ -1238,13 +1539,15 @@
       }
 
       /**
-       * Display show detail view (FIXED VERSION)
+       * Display show detail view
        */
       function displayShowDetail(show) {
         const grid = document.getElementById("shows-grid");
         const detailView = document.getElementById("show-detail");
+        const pagination = document.getElementById("pagination");
 
         if (grid) grid.style.display = "none";
+        if (pagination) pagination.style.display = "none";
         detailView.style.display = "block";
 
         const name = show.name || "Untitled";
@@ -1254,7 +1557,6 @@
           ? show.rating.average.toFixed(1)
           : "N/A";
 
-        // Fix: Get the best available image
         let imageUrl = null;
         if (show.image?.original) {
           imageUrl = show.image.original;
@@ -1267,15 +1569,12 @@
         const cast = show._embedded?.cast?.slice(0, 8) || [];
         const episodes = show._embedded?.episodes || [];
         const seasons = [...new Set(episodes.map((ep) => ep.season))].sort();
-
         const isSaved = isShowSaved(show.id);
-
-        // Get first few episodes
         const sampleEpisodes = episodes.slice(0, 5);
 
         detailView.innerHTML = `
-          <div class="back-to-grid" onclick="showGrid()">
-            <span class="back-btn" style="display: inline-flex; margin-bottom: 20px;">
+          <div class="back-to-grid">
+            <span class="back-btn-custom" onclick="goBack()">
               <i class="fas fa-arrow-left"></i> Back to Results
             </span>
           </div>
@@ -1285,9 +1584,7 @@
               imageUrl
                 ? `<img src="${imageUrl}" alt="${name}" class="detail-image" 
                 onerror="this.onerror=null; this.src='https://via.placeholder.com/300x450/0a1128/00d9ff?text=${encodeURIComponent(name)}';">`
-                : `<div class="detail-image no-image">
-                <i class="fas fa-tv"></i>
-              </div>`
+                : `<div class="no-image-large"><i class="fas fa-tv"></i></div>`
             }
             <div class="detail-info">
               <h2>${name}</h2>
@@ -1349,9 +1646,7 @@
                       .map(
                         (person) => `
                       <div class="cast-item">
-                        <div class="cast-image">
-                          <i class="fas fa-user"></i>
-                        </div>
+                        <div class="cast-image"><i class="fas fa-user"></i></div>
                         <div class="cast-name">${person.person.name}</div>
                         <div class="cast-character">${person.character.name}</div>
                       </div>
@@ -1365,18 +1660,14 @@
               }
               
               <div style="display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
-                <button class="save-show-btn ${isSaved ? "saved" : ""}" 
-                  onclick="saveCurrentShow()" 
-                  style="padding: 15px 30px; font-size: 1rem;">
+                <button class="save-show-btn ${isSaved ? "saved" : ""}" onclick="saveCurrentShow()" style="padding: 15px 30px; font-size: 1rem;">
                   <i class="fas ${isSaved ? "fa-check" : "fa-bookmark"}"></i>
                   ${isSaved ? "Saved to Watchlist" : "Save to Watchlist"}
                 </button>
-                
                 ${
                   show.officialSite
                     ? `
-                  <a href="${show.officialSite}" target="_blank" class="save-show-btn" 
-                    style="padding: 15px 30px; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;">
+                  <a href="${show.officialSite}" target="_blank" class="save-show-btn" style="padding: 15px 30px; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;">
                     <i class="fas fa-external-link-alt"></i> Official Site
                   </a>
                 `
@@ -1413,7 +1704,7 @@
       }
 
       /**
-       * Save current show from detail view
+       * Save current show
        */
       function saveCurrentShow() {
         if (currentShowData) {
@@ -1422,18 +1713,9 @@
       }
 
       /**
-       * Show grid (hide detail view)
-       */
-      function showGrid() {
-        document.getElementById("shows-grid").style.display = "grid";
-        document.getElementById("show-detail").style.display = "none";
-      }
-
-      /**
-       * Show notification message
+       * Show notification
        */
       function showNotification(message, type = "success") {
-        // Remove existing notification
         const existing = document.querySelector(".success-notification");
         if (existing) existing.remove();
 
@@ -1455,36 +1737,25 @@
 
         notification.style.borderColor = color;
         notification.style.color = color;
-        notification.innerHTML = `
-          <i class="fas ${icon}"></i>
-          <span>${message}</span>
-        `;
-
+        notification.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
         document.body.appendChild(notification);
-
-        setTimeout(() => {
-          notification.remove();
-        }, 3000);
+        setTimeout(() => notification.remove(), 3000);
       }
 
       /**
-       * Main search function
+       * Perform search
        */
-      async function searchShows() {
-        const searchInput = document.getElementById("show-search");
-        const searchTerm = searchInput.value.trim();
-
-        // Validate input
+      async function performSearch(searchTerm) {
         if (!searchTerm) {
-          showError("Please enter a TV show name to search.");
+          loadDefaultShows();
           return;
         }
 
-        // Show loading state
         showLoading();
+        isSearchMode = true;
+        currentSearchTerm = searchTerm;
 
         try {
-          // Make API request to TVmaze - no API key needed!
           const response = await fetch(
             `${API_BASE_URL}/search/shows?q=${encodeURIComponent(searchTerm)}`,
           );
@@ -1498,18 +1769,23 @@
           const data = await response.json();
 
           if (!data || data.length === 0) {
-            showError(
-              `No results found for "${searchTerm}". Please try a different search.`,
-            );
+            showError(`No results found for "${searchTerm}".`);
             return;
           }
 
-          // Hide loading, clear error, display data
+          allShowsData = data.map((item) => item.show).filter((show) => show);
+
+          if (allShowsData.length === 0) {
+            showError(`No valid shows found for "${searchTerm}".`);
+            return;
+          }
+
+          filteredShows = sortShows(allShowsData, currentSort);
+          currentPage = 1;
+
           hideLoading();
           document.getElementById("error").style.display = "none";
-          displayShows(data);
-
-          // Add to recent searches
+          displayPaginatedShows();
           addToRecentSearches(searchTerm);
         } catch (error) {
           console.error("Error fetching show data:", error);
@@ -1520,8 +1796,15 @@
       }
 
       /**
-       * Search on Enter key press
+       * Main search function
        */
+      async function searchShows() {
+        const searchInput = document.getElementById("show-search");
+        const searchTerm = searchInput.value.trim();
+        await performSearch(searchTerm);
+      }
+
+      // Event listeners
       document
         .getElementById("show-search")
         .addEventListener("keypress", function (event) {
@@ -1530,66 +1813,20 @@
           }
         });
 
-      /**
-       * Clear error when user starts typing
-       */
       document
         .getElementById("show-search")
         .addEventListener("input", function () {
           document.getElementById("error").style.display = "none";
         });
 
-      /**
-       * Load popular shows on page load
-       */
+      // Initialize
       document.addEventListener("DOMContentLoaded", function () {
         displayRecentSearches();
-
-        // Check if user is logged in (optional)
         const loggedInUser = sessionStorage.getItem("loggedInUser");
         if (!loggedInUser) {
           console.log("No user logged in - but TV explorer is public");
         }
-
-        // Load some popular shows initially
-        async function loadPopularShows() {
-          showLoading();
-          try {
-            // Get schedule for today to show what's currently airing
-            const today = new Date().toISOString().split("T")[0];
-            const response = await fetch(
-              `${API_BASE_URL}/schedule?country=US&date=${today}`,
-            );
-            const schedule = await response.json();
-
-            // Get unique shows from schedule
-            const showIds = [...new Set(schedule.map((item) => item.show.id))];
-            const showPromises = showIds
-              .slice(0, 12)
-              .map((id) =>
-                fetch(`${API_BASE_URL}/shows/${id}`).then((res) => res.json()),
-              );
-
-            const shows = await Promise.all(showPromises);
-            hideLoading();
-            displayShows(shows.map((show) => ({ show })));
-          } catch (error) {
-            console.error("Error loading popular shows:", error);
-            // Fallback to search for popular shows
-            try {
-              const response = await fetch(
-                `${API_BASE_URL}/search/shows?q=the`,
-              );
-              const data = await response.json();
-              hideLoading();
-              displayShows(data.slice(0, 12));
-            } catch (fallbackError) {
-              showError("Could not load shows. Please try searching.");
-            }
-          }
-        }
-
-        loadPopularShows();
+        loadDefaultShows();
       });
     </script>
   </body>
